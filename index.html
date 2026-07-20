@@ -1,50 +1,52 @@
 <!DOCTYPE html>
-<div class="card">
-    <h3></h3>
-    <!-- Add your image here -->
-    <img src="Gemini_Generated_Image_i7d7n6i7d7n6i7d7.png" alt="MarvelCode Logo" style="max-width: 100%; height: auto; border-radius: 6px;">
-</div>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyberSec Lab & CTF Hub</title>
+    <title>IronShield.io</title>
     <style>
         :root {
-            --bg-color: #0b0f19;
-            --card-bg: #111827;
-            --border-color: #1f2937;
             --accent-cyan: #38bdf8;
             --accent-pink: #f43f5e;
             --accent-green: #4ade80;
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
+            --text-main: #ffffff;
+            --text-muted: #cbd5e1;
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
             margin: 0;
             padding: 0;
+            color: var(--text-main);
+            
+            /* Full-screen background image setup with a dark tint overlay */
+            background: linear-gradient(rgba(11, 15, 25, 0.85), rgba(11, 15, 25, 0.92)), 
+                        url('Gemini_Generated_Image_i7d7n6i7d7n6i7d7.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            min-height: 100vh;
         }
         .hero {
-            background: linear-gradient(135deg, #1e1b4b 0%, #0b0f19 100%);
-            border-bottom: 2px solid var(--border-color);
-            padding: 4rem 2rem;
+            padding: 5rem 2rem 3rem 2rem;
             text-align: center;
         }
         .hero h1 {
             font-family: 'Courier New', Courier, monospace;
-            font-size: 2.5rem;
+            font-size: 3rem;
             color: var(--accent-cyan);
             margin: 0 0 1rem 0;
-            text-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+            /* Neon Glow Effect */
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.7), 
+                         0 0 20px rgba(56, 189, 248, 0.4), 
+                         0 0 30px rgba(56, 189, 248, 0.2);
         }
         .hero p {
             color: var(--text-muted);
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             max-width: 600px;
             margin: 0 auto 2rem auto;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
         }
         .btn-group {
             display: flex;
@@ -52,7 +54,7 @@
             gap: 1rem;
         }
         .btn {
-            background-color: transparent;
+            background-color: rgba(17, 24, 39, 0.7);
             border: 2px solid var(--accent-cyan);
             color: var(--accent-cyan);
             padding: 0.75rem 1.5rem;
@@ -61,24 +63,26 @@
             cursor: pointer;
             text-decoration: none;
             transition: all 0.2s ease;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
         }
         .btn:hover {
             background-color: var(--accent-cyan);
-            color: var(--bg-color);
-            box-shadow: 0 0 15px var(--accent-cyan);
+            color: #0b0f19;
+            box-shadow: 0 0 20px var(--accent-cyan);
         }
         .btn-pink {
             border-color: var(--accent-pink);
             color: var(--accent-pink);
+            box-shadow: 0 0 10px rgba(244, 63, 94, 0.2);
         }
         .btn-pink:hover {
             background-color: var(--accent-pink);
-            color: var(--bg-color);
-            box-shadow: 0 0 15px var(--accent-pink);
+            color: #0b0f19;
+            box-shadow: 0 0 20px var(--accent-pink);
         }
         .container {
             max-width: 1000px;
-            margin: 3rem auto;
+            margin: 2rem auto;
             padding: 0 1.5rem;
         }
         .grid {
@@ -87,22 +91,27 @@
             gap: 1.5rem;
         }
         .card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
+            /* Semi-transparent dark background for cards so they stand out over the image */
+            background-color: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(56, 189, 248, 0.3);
             border-radius: 8px;
             padding: 1.5rem;
             position: relative;
             overflow: hidden;
             transition: transform 0.2s, border-color 0.2s;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
         }
         .card:hover {
             transform: translateY(-3px);
             border-color: var(--accent-cyan);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
         }
         .card h3 {
             margin-top: 0;
             color: var(--accent-green);
             font-family: 'Courier New', Courier, monospace;
+            text-shadow: 0 0 8px rgba(74, 222, 128, 0.5);
         }
         .card p {
             color: var(--text-muted);
@@ -110,11 +119,12 @@
         }
         footer {
             text-align: center;
-            padding: 2rem;
+            padding: 2.5rem;
             color: var(--text-muted);
-            border-top: 1px solid var(--border-color);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             margin-top: 4rem;
             font-size: 0.85rem;
+            background-color: rgba(11, 15, 25, 0.6);
         }
     </style>
 </head>
@@ -125,7 +135,7 @@
         <p>A gamified platform for ethical hacking, network analysis, and penetration testing drills inspired by top-tier CTF environments.</p>
         <div class="btn-group">
             <a href="#modules" class="btn">Explore Modules</a>
-            <a href="#" class="btn btn-pink">Admin Portal</a>
+            <a href="admin.html" class="btn btn-pink">Admin Portal</a>
         </div>
     </div>
 
@@ -141,13 +151,14 @@
             </div>
             <div class="card">
                 <h3>03. IP Tracking Lab</h3>
-                <p>Coming soon: Live request logger to capture client visitor metadata, user-agents, and remote IP addresses.</p>
+                <p>Live request logger to capture client visitor metadata, user-agents, and remote IP addresses.</p>
+                <a href="ip-tracker.html" class="btn" style="display:inline-block; margin-top:1rem; padding:0.4rem 0.8rem; font-size:0.8rem;">Open Lab</a>
             </div>
         </div>
     </div>
 
     <footer>
-        <p>Sec-Lab Environment &bull; Powered by GitHub &amp; Vercel</p>
+        <p>IronShield.io Environment &bull; Powered by GitHub &amp; Vercel</p>
     </footer>
 
 </body>
