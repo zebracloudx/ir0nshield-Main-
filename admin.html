@@ -6,7 +6,6 @@
     <title>IronShield | Admin Portal</title>
     <style>
         :root {
-            --bg-color: #0b0f19;
             --accent-green: #10b981;
             --text-main: #f3f4f6;
             --border-color: rgba(75, 85, 99, 0.4);
@@ -22,8 +21,13 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            background-color: var(--bg-color);
             color: var(--text-main);
+
+            /* --- BACKGROUND IMAGE RESTORED --- */
+            /* Replace the URL below with your actual background image link or local file path */
+            background: linear-gradient(rgba(11, 15, 25, 0.4), rgba(11, 15, 25, 0.8)), 
+                        url(Gemini_Generated_Image_ekcz86ekcz86ekcz.png) no-repeat center center fixed;
+            background-size: cover;
         }
 
         /* Card Container */
@@ -138,7 +142,7 @@
 
     <script>
         // Password for testing
-        const CORRECT_PASS = "invalid12345$";
+        const CORRECT_PASS = "invalidpassword1@34$";
 
         function checkPassword() {
             const userInput = document.getElementById("passcode").value;
