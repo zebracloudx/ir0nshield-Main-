@@ -6,13 +6,9 @@
     <title>IronShield | Admin Portal</title>
     <style>
         :root {
-            /* Define your theme colors */
             --bg-color: #0b0f19;
-            --card-bg: rgba(17, 24, 39, 0.8); /* Semi-transparent background for cards */
             --accent-green: #10b981;
-            --accent-red: #ef4444;
             --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
             --border-color: rgba(75, 85, 99, 0.4);
         }
 
@@ -24,289 +20,41 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden; /* Prevent scrollbars */
-
-            /* --- FULL SCREEN BACKGROUND IMAGE SCRIPT --- */
-            /* Replace 'your-uploaded-image-name.jpg' with your actual filename */
-            background-image: url(Gemini_Generated_Image_ekcz86ekcz86ekcz.png);
-            
-            /* These properties make the image cover the screen perfectly */
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-attachment: fixed; /* Keeps image fixed while scrolling if content gets long */
-            /* ------------------------------------------- */
+            overflow: hidden;
+            background-color: var(--bg-color);
+            color: var(--text-main);
         }
 
-        /* Create a dark overlay to ensure text readability over the image */
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(11, 15, 25, 0.3); /* Adjust the last number (0.85) for darker/lighter overlay */
-            z-index: -1; /* Pushes overlay behind all content */
-        }
-
-        /* Login Screen Overlay */
-        #login-overlay {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            width: 100%;
-            position: absolute; /* Ensure it sits correctly over the background */
-        }
-
-        .login-card {
-            background: var(--card-bg);
+        .hacking-card {
+            background: rgba(17, 24, 39, 0.9);
             border: 1px solid var(--border-color);
-            padding: 2.5rem;
+            padding: 3rem 4rem;
             border-radius: 12px;
-            width: 100%;
-            max-width: 400px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
             text-align: center;
-            backdrop-filter: blur(5px); /* Optional: Adds a frosted glass effect to the card */
+            backdrop-filter: blur(5px);
         }
 
-        .login-card h2 {
-            margin-top: 0;
+        h1 {
             color: var(--accent-green);
+            margin: 0 0 1rem 0;
+            font-size: 2rem;
         }
 
-        .login-card input {
-            width: 100%;
-            padding: 12px;
-            margin: 15px 0;
-            background: rgba(3, 7, 18, 0.5);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            color: white;
-            box-sizing: border-box;
-        }
-
-        .login-card button {
-            width: 100%;
-            padding: 12px;
-            background: var(--accent-green);
-            color: #030712;
-            font-weight: bold;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: opacity 0.2s;
-        }
-
-        .login-card button:hover {
-            opacity: 0.9;
-        }
-
-        #error-msg {
-            color: var(--accent-red);
-            font-size: 0.85rem;
-            margin-top: 10px;
-            display: none;
-        }
-
-        /* Dashboard View (Hidden by default) */
-        #admin-dashboard {
-            display: none;
-            padding: 2rem;
-            max-width: 1200px;
-            width: 100%;
-            height: 100%;
-            box-sizing: border-box;
-            overflow-y: auto; /* Allows scrolling if dashboard content exceeds screen height */
-        }
-
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        header h1 {
+        p {
+            font-size: 1.2rem;
+            color: var(--text-main);
+            letter-spacing: 1px;
             margin: 0;
-            font-size: 1.5rem;
-            color: var(--accent-green);
-        }
-
-        .logout-btn {
-            background: transparent;
-            border: 1px solid var(--accent-red);
-            color: var(--accent-red);
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .logout-btn:hover {
-            background: var(--accent-red);
-            color: white;
-        }
-
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .metric-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 1.5rem;
-            border-radius: 8px;
-            backdrop-filter: blur(3px);
-        }
-
-        .metric-card h3 {
-            margin: 0 0 10px 0;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        .metric-card .value {
-            font-size: 1.8rem;
-            font-weight: bold;
-        }
-
-        .logs-section {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 1.5rem;
-            border-radius: 8px;
-            backdrop-filter: blur(3px);
-        }
-
-        .logs-section h3 {
-            margin-top: 0;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-            font-size: 0.9rem;
-        }
-
-        th, td {
-            padding: 12px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        th {
-            color: var(--text-muted);
-        }
-
-        .status-badge {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--accent-green);
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.8rem;
         }
     </style>
 </head>
 <body>
 
-    <!-- LOGIN PROTECTION OVERLAY -->
-    <div id="login-overlay">
-        <div class="login-card">
-            <h2>Restricted Access</h2>
-            <p style="color: var(--text-muted); font-size: 0.9rem;">Enter security passcode to access IronShield Admin.</p>
-            <input type="password" id="passcode" placeholder="Enter passcode">
-            <button onclick="attemptLogin()">Authenticate</button>
-            <div id="error-msg">Invalid passcode. Access Denied.</div>
-        </div>
+    <div class="hacking-card">
+        <h1>🛡️ Access Achieved</h1>
+        <p>Congrats for hacking me. *****di</p>
     </div>
 
-    <!-- PROTECTED ADMIN DASHBOARD -->
-    <div id="admin-dashboard">
-        <header>
-            <h1>🛡️ IronShield // Command Center</h1>
-            <button class="logout-btn" onclick="logout()">Disconnect</button>
-        </header>
-
-        <div class="metrics-grid">
-            <div class="metric-card">
-                <h3>ACTIVE LAB SESSIONS</h3>
-                <div class="value" style="color: var(--accent-green);">4</div>
-            </div>
-            <div class="metric-card">
-                <h3>SYSTEM STATUS</h3>
-                <div class="value" style="font-size: 1.2rem; margin-top: 5px;">Operational [Secured]</div>
-            </div>
-            <div class="metric-card">
-                <h3>SIMULATED THREATS BLOCKED</h3>
-                <div class="value" style="color: #38bdf8;">1,428</div>
-            </div>
-        </div>
-
-        <div class="logs-section">
-            <h3>Recent Traffic & Lab Telemetry</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Timestamp</th>
-                        <th>Source IP</th>
-                        <th>Module Targeted</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody id="log-table-body">
-                    <tr>
-                        <td>2026-07-20 22:15:02</td>
-                        <td>192.168.1.45</td>
-                        <td>Web Security / SQLi</td>
-                        <td><span class="status-badge">Logged</span></td>
-                    </tr>
-                    <tr>
-                        <td>2026-07-20 21:40:11</td>
-                        <td>10.0.0.12</td>
-                        <td>Network Traffic / PCAP</td>
-                        <td><span class="status-badge">Logged</span></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <script>
-        // Current passcode for your admin portal
-        const CORRECT_PASS = "invalid1234"; 
-
-        function attemptLogin() {
-            const inputVal = document.getElementById('passcode').value;
-            const errorMsg = document.getElementById('error-msg');
-
-            if (inputVal === CORRECT_PASS) {
-                document.getElementById('login-overlay').style.display = 'none';
-                document.getElementById('admin-dashboard').style.display = 'block';
-                sessionStorage.setItem('isAdminAuthenticated', 'true');
-            } else {
-                errorMsg.style.display = 'block';
-            }
-        }
-
-        function logout() {
-            sessionStorage.removeItem('isAdminAuthenticated');
-            location.reload();
-        }
-
-        // Check if user was already authenticated during this browser session
-        window.onload = function() {
-            if (sessionStorage.getItem('isAdminAuthenticated') === 'true') {
-                document.getElementById('login-overlay').style.display = 'none';
-                document.getElementById('admin-dashboard').style.display = 'block';
-            }
-        }
-    </script>
 </body>
 </html>
