@@ -10,6 +10,7 @@
             --accent-green: #10b981;
             --text-main: #f3f4f6;
             --border-color: rgba(75, 85, 99, 0.4);
+            --error-red: #ef4444;
         }
 
         body {
@@ -25,36 +26,136 @@
             color: var(--text-main);
         }
 
-        .hacking-card {
+        /* Card Container */
+        .card {
             background: rgba(17, 24, 39, 0.9);
             border: 1px solid var(--border-color);
-            padding: 3rem 4rem;
+            padding: 2.5rem;
             border-radius: 12px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            text-align: center;
+            width: 100%;
+            max-width: 400px;
             backdrop-filter: blur(5px);
+            text-align: center;
         }
 
-        h1 {
+        h2 {
+            margin-bottom: 1.5rem;
+            color: var(--text-main);
+        }
+
+        .input-group {
+            margin-bottom: 1.25rem;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+            color: #9ca3af;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(31, 41, 55, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-main);
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--accent-green);
+        }
+
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: var(--accent-green);
+            color: #000;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .error-msg {
+            color: var(--error-red);
+            font-size: 0.85rem;
+            margin-top: 0.75rem;
+            display: none;
+        }
+
+        /* Success Hacked Screen (Hidden by default) */
+        .success-screen {
+            display: none;
+        }
+
+        .success-screen h1 {
             color: var(--accent-green);
             margin: 0 0 1rem 0;
-            font-size: 2rem;
+            font-size: 1.8rem;
         }
 
-        p {
-            font-size: 1.2rem;
+        .success-screen p {
+            font-size: 1.1rem;
             color: var(--text-main);
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             margin: 0;
         }
     </style>
 </head>
 <body>
 
-    <div class="hacking-card">
-        <h1>🛡️ Access Achieved</h1>
-        <p>Congrats for hacking me. *****di</p>
+    <div class="card">
+        <!-- Login Form Section -->
+        <div id="loginSection">
+            <h2>🔐 Admin Portal</h2>
+            <div class="input-group">
+                <label for="passcode">Enter Passcode</label>
+                <input type="password" id="passcode" placeholder="Enter password...">
+            </div>
+            <button onclick="checkPassword()">Access Panel</button>
+            <div id="errorMsg" class="error-msg">Incorrect passcode. Try again.</div>
+        </div>
+
+        <!-- Hidden Success / Hacked Message Section -->
+        <div id="successSection" class="success-screen">
+            <h1>🛡️ Access Achieved</h1>
+            <p>Congrats for hacking me. *****endi</p>
+        </div>
     </div>
+
+    <script>
+        // Password for testing
+        const CORRECT_PASS = "invalid12345$";
+
+        function checkPassword() {
+            const userInput = document.getElementById("passcode").value;
+            const errorMsg = document.getElementById("errorMsg");
+            const loginSection = document.getElementById("loginSection");
+            const successSection = document.getElementById("successSection");
+
+            if (userInput === CORRECT_PASS) {
+                // Hide login form and reveal success message
+                loginSection.style.display = "none";
+                successSection.style.display = "block";
+            } else {
+                // Show error message
+                errorMsg.style.display = "block";
+            }
+        }
+    </script>
 
 </body>
 </html>
