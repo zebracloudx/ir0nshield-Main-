@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberSec Lab & CTF Hub</title>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #111827;
+            --border-color: #1f2937;
+            --accent-cyan: #38bdf8;
+            --accent-pink: #f43f5e;
+            --accent-green: #4ade80;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+        }
+        .hero {
+            background: linear-gradient(135deg, #1e1b4b 0%, #0b0f19 100%);
+            border-bottom: 2px solid var(--border-color);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        .hero h1 {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 2.5rem;
+            color: var(--accent-cyan);
+            margin: 0 0 1rem 0;
+            text-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+        }
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 2rem auto;
+        }
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        .btn {
+            background-color: transparent;
+            border: 2px solid var(--accent-cyan);
+            color: var(--accent-cyan);
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        .btn:hover {
+            background-color: var(--accent-cyan);
+            color: var(--bg-color);
+            box-shadow: 0 0 15px var(--accent-cyan);
+        }
+        .btn-pink {
+            border-color: var(--accent-pink);
+            color: var(--accent-pink);
+        }
+        .btn-pink:hover {
+            background-color: var(--accent-pink);
+            color: var(--bg-color);
+            box-shadow: 0 0 15px var(--accent-pink);
+        }
+        .container {
+            max-width: 1000px;
+            margin: 3rem auto;
+            padding: 0 1.5rem;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent-cyan);
+        }
+        .card h3 {
+            margin-top: 0;
+            color: var(--accent-green);
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+            margin-top: 4rem;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hero">
+        <h1>// SEC-LAB_CTF.HUB</h1>
+        <p>A gamified platform for ethical hacking, network analysis, and penetration testing drills inspired by top-tier CTF environments.</p>
+        <div class="btn-group">
+            <a href="#modules" class="btn">Explore Modules</a>
+            <a href="#" class="btn btn-pink">Admin Portal</a>
+        </div>
+    </div>
+
+    <div class="container" id="modules">
+        <div class="grid">
+            <div class="card">
+                <h3>01. Web Security</h3>
+                <p>Test vulnerabilities ranging from SQL Injection payloads to cross-site scripting (XSS) and broken authentication.</p>
+            </div>
+            <div class="card">
+                <h3>02. Network Traffic</h3>
+                <p>Analyze TCP/IP packet captures, track connection handshakes, and build custom packet analyzers.</p>
+            </div>
+            <div class="card">
+                <h3>03. IP Tracking Lab</h3>
+                <p>Coming soon: Live request logger to capture client visitor metadata, user-agents, and remote IP addresses.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Sec-Lab Environment &bull; Powered by GitHub &amp; Vercel</p>
+    </footer>
+
+</body>
+</html>
