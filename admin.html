@@ -6,21 +6,48 @@
     <title>IronShield | Admin Portal</title>
     <style>
         :root {
+            /* Define your theme colors */
             --bg-color: #0b0f19;
-            --card-bg: #111827;
+            --card-bg: rgba(17, 24, 39, 0.8); /* Semi-transparent background for cards */
             --accent-green: #10b981;
             --accent-red: #ef4444;
             --text-main: #f3f4f6;
             --text-muted: #9ca3af;
-            --border-color: #1f2937;
+            --border-color: rgba(75, 85, 99, 0.4);
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
             margin: 0;
             padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* Prevent scrollbars */
+
+            /* --- FULL SCREEN BACKGROUND IMAGE SCRIPT --- */
+            /* Replace 'your-uploaded-image-name.jpg' with your actual filename */
+            background-image: url(Gemini_Generated_Image_ekcz86ekcz86ekcz.png);
+            
+            /* These properties make the image cover the screen perfectly */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed; /* Keeps image fixed while scrolling if content gets long */
+            /* ------------------------------------------- */
+        }
+
+        /* Create a dark overlay to ensure text readability over the image */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(11, 15, 25, 0.85); /* Adjust the last number (0.85) for darker/lighter overlay */
+            z-index: -1; /* Pushes overlay behind all content */
         }
 
         /* Login Screen Overlay */
@@ -28,8 +55,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background: var(--bg-color);
+            height: 100%;
+            width: 100%;
+            position: absolute; /* Ensure it sits correctly over the background */
         }
 
         .login-card {
@@ -41,6 +69,7 @@
             max-width: 400px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
             text-align: center;
+            backdrop-filter: blur(5px); /* Optional: Adds a frosted glass effect to the card */
         }
 
         .login-card h2 {
@@ -52,7 +81,7 @@
             width: 100%;
             padding: 12px;
             margin: 15px 0;
-            background: #030712;
+            background: rgba(3, 7, 18, 0.5);
             border: 1px solid var(--border-color);
             border-radius: 6px;
             color: white;
@@ -87,7 +116,10 @@
             display: none;
             padding: 2rem;
             max-width: 1200px;
-            margin: 0 auto;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            overflow-y: auto; /* Allows scrolling if dashboard content exceeds screen height */
         }
 
         header {
@@ -131,6 +163,7 @@
             border: 1px solid var(--border-color);
             padding: 1.5rem;
             border-radius: 8px;
+            backdrop-filter: blur(3px);
         }
 
         .metric-card h3 {
@@ -149,6 +182,7 @@
             border: 1px solid var(--border-color);
             padding: 1.5rem;
             border-radius: 8px;
+            backdrop-filter: blur(3px);
         }
 
         .logs-section h3 {
@@ -187,7 +221,7 @@
         <div class="login-card">
             <h2>Restricted Access</h2>
             <p style="color: var(--text-muted); font-size: 0.9rem;">Enter security passcode to access IronShield Admin.</p>
-            <input type="password" id="passcode" placeholder="Enter passcode (e.g. root123)">
+            <input type="password" id="passcode" placeholder="Enter passcode">
             <button onclick="attemptLogin()">Authenticate</button>
             <div id="error-msg">Invalid passcode. Access Denied.</div>
         </div>
@@ -245,8 +279,8 @@
     </div>
 
     <script>
-        // Simple client-side credential check for study purposes
-        const CORRECT_PASS = "invalid12345$"; // You can change this passcode anytime
+        // Current passcode for your admin portal
+        const CORRECT_PASS = "invalid1234"; 
 
         function attemptLogin() {
             const inputVal = document.getElementById('passcode').value;
