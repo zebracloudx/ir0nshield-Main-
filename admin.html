@@ -24,7 +24,6 @@
             color: var(--text-main);
 
             /* --- BACKGROUND IMAGE RESTORED --- */
-            /* Replace the URL below with your actual background image link or local file path */
             background: linear-gradient(rgba(11, 15, 25, 0.4), rgba(11, 15, 25, 0.8)), 
                         url(Gemini_Generated_Image_ekcz86ekcz86ekcz.png) no-repeat center center fixed;
             background-size: cover;
@@ -140,6 +139,11 @@
         </div>
     </div>
 
+    <!-- Audio Element for Success Sound -->
+    <audio id="successAudio" preload="auto">
+        <source src="209456__bigjoedrummer__hip-hop-kit-beats.mp3" type="audio/mpeg">
+    </audio>
+
     <script>
         // Password for testing
         const CORRECT_PASS = "invalidpa$$word01234";
@@ -149,11 +153,17 @@
             const errorMsg = document.getElementById("errorMsg");
             const loginSection = document.getElementById("loginSection");
             const successSection = document.getElementById("successSection");
+            const successAudio = document.getElementById("successAudio");
 
             if (userInput === CORRECT_PASS) {
                 // Hide login form and reveal success message
                 loginSection.style.display = "none";
                 successSection.style.display = "block";
+
+                // Play the success beat audio cue
+                successAudio.play().catch(error => {
+                    console.log("Audio playback blocked or file path needs adjustment:", error);
+                });
             } else {
                 // Show error message
                 errorMsg.style.display = "block";
