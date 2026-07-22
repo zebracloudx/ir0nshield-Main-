@@ -253,6 +253,11 @@
             }
         }
     </script>
-
+    async function signOut() {
+    const { error } = await _supabase.auth.signOut();
+    if (!error) {
+        location.reload(); // Reset the page back to the login state
+    }
+}
 </body>
 </html>
