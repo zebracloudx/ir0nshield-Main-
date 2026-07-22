@@ -162,13 +162,18 @@
         </div>
 
         <!-- Hidden Success / Hacked Message Section -->
-        <div id="successSection" class="success-screen">
-            <h1>WELCOME HOME!!! SHERLOCKS🕵️‍♂️🔍!!</h1>
-            <!-- Direct Working GIF CDN Link -->
-            <img src="Dancing cat.gif" alt="Dancing White Cat">
-            <p>Congratulations! Dance with me!</p>
-        </div>
+        <div id="successSection" class="success-screen" style="display: none;">
+    <h1>WELCOME HOME!!! SHERLOCKS🕵️‍♂️🔍!!</h1>
+    <img src="Dancing cat.gif" alt="Dancing White Cat">
+    <p>Congratulations! Dance with me!</p>
+    
+    <!-- Secure Logout Button -->
+    <div style="margin-top: 2rem;">
+        <button onclick="signOut()" style="background: #ef4444; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold;">
+            🔒 Secure Logout
+        </button>
     </div>
+</div>
 
     <!-- Audio Element for Success Sound -->
     <audio id="successAudio" preload="auto">
@@ -252,12 +257,7 @@
                 triggerSuccess(data.user.email);
             }
         }
-    </script>
-    async function signOut() {
-    const { error } = await _supabase.auth.signOut();
-    if (!error) {
-        location.reload(); // Reset the page back to the login state
-    }
+        
 }
 </body>
 </html>
