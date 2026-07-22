@@ -112,7 +112,7 @@
             display: none;
         }
 
-        /* Success Hacked Screen (Hidden by default) */
+        /* Success Screen (Hidden by default) */
         .success-screen {
             display: none;
         }
@@ -161,10 +161,10 @@
             <div id="errorMsg" class="error-msg">Authentication failed. Check your inputs.</div>
         </div>
 
-        <!-- Hidden Success / Hacked Message Section -->
+        <!-- Success / Welcome Message Section -->
         <div id="successSection" class="success-screen">
             <h1>WELCOME HOME! SHERLOCKS🕵️‍♂️</h1>
-            <img src="CBB.jpeg" alt="Dashboard Visual">
+            <img src="CBB.jpeg" alt="Dashboard Visual" onerror="this.style.display='none'">
             <p>Congratulations!!</p>
             
             <!-- Dashboard Data Container -->
@@ -209,9 +209,9 @@
             loginSection.style.display = "none";
             successSection.style.display = "block";
 
-            // Play the success beat audio cue
+            // Play the success beat audio cue safely
             successAudio.play().catch(error => {
-                console.log("Audio playback blocked or file path needs adjustment:", error);
+                console.log("Audio playback skipped or file missing:", error);
             });
 
             // Fetch live session telemetry data from Supabase
@@ -235,18 +235,6 @@
                     <li><strong>Database Sync:</strong> Secure ✅</li>
                 `;
             }
-        }
-
-        // Lab Quick-Launch Tool Simulation
-        function pingLab(target) {
-            const statusDiv = document.getElementById("labStatus");
-            statusDiv.style.color = "#f3f4f6";
-            statusDiv.innerText = `[+] Probing ${target}...`;
-            
-            setTimeout(() => {
-                statusDiv.style.color = "var(--accent-green)";
-                statusDiv.innerText = `[✓] ${target} is online.`;
-            }, 800);
         }
 
         // 1. Secure Register Function
@@ -298,13 +286,13 @@
             } else {
                 errorMsg.style.display = "none";
 
-                // Log the successful login entry to Supabase audit trail table (optional backend table)
+                // Log the successful login entry to Supabase audit trail table using lowercase columns
                 try {
                     await _supabase.from('audit_logs').insert([
-    { Email: data.user.email, Action: 'ADMIN_LOGIN' }
-]);
+                        { email: data.user.email, action: 'ADMIN_LOGIN' }
+                    ]);
                 } catch (logErr) {
-                    console.log("Audit log table note: Make sure 'audit_logs' table exists if tracking database logs.", logErr);
+                    console.log("Audit log table note:", logErr);
                 }
 
                 triggerSuccess(data.user.email);
@@ -315,7 +303,7 @@
         async function signOut() {
             const { error } = await _supabase.auth.signOut();
             if (!error) {
-                location.reload(); // Resets the page back to the login state cleanly
+                location.reload(); 
             } else {
                 alert("Error logging out: " + error.message);
             }
