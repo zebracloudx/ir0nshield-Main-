@@ -68,6 +68,7 @@
             color: var(--text-main);
             font-size: 1rem;
             box-sizing: border-box;
+            margin-bottom: 0.5rem;
         }
 
         input:focus {
@@ -86,10 +87,22 @@
             font-size: 1rem;
             cursor: pointer;
             transition: opacity 0.2s;
+            margin-top: 0.5rem;
         }
 
         button:hover {
             opacity: 0.9;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            border: 1px solid var(--accent-green);
+            color: var(--accent-green);
+            margin-top: 0.5rem;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(16, 185, 129, 0.1);
         }
 
         .error-msg {
@@ -131,12 +144,21 @@
         <!-- Login Form Section -->
         <div id="loginSection">
             <h2>🔐 Admin Portal</h2>
+            
             <div class="input-group">
-                <label for="passcode">Enter Passcode</label>
-                <input type="password" id="passcode" placeholder="Enter password...">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" placeholder="Enter your email...">
             </div>
-            <button onclick="checkPassword()">Access Panel</button>
-            <div id="errorMsg" class="error-msg">Incorrect passcode. Try again.</div>
+
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter secure password...">
+            </div>
+
+            <button onclick="signIn()">Log In</button>
+            <button class="btn-secondary" onclick="signUp()">Register Account</button>
+            
+            <div id="errorMsg" class="error-msg">Authentication failed. Check your inputs.</div>
         </div>
 
         <!-- Hidden Success / Hacked Message Section -->
@@ -153,47 +175,84 @@
         <source src="sherlock_holmes.mp3" type="audio/mpeg">
     </audio>
 
-    <script>
-        // Password for testing
-        const CORRECT_PASS = "invalidpa$$word01234";
+    <!-- Include Supabase JS SDK library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-        function checkPassword() {
-            const userInput = document.getElementById("passcode").value;
-            const errorMsg = document.getElementById("errorMsg");
+    <script>
+        // Initialize Supabase Connection
+        const supabaseUrl = 'https://xobbptbvknxdmajfpyoy.supabase.co'; 
+        const supabaseKey = 'sb_publishable_IYIGDKRlLNB0YRcVFpXBMg_klP4MQVV';   
+        const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+        console.log("Supabase connected successfully!");
+
+        // Trigger Success UI & Audio
+        function triggerSuccess(userEmail) {
             const loginSection = document.getElementById("loginSection");
             const successSection = document.getElementById("successSection");
             const successAudio = document.getElementById("successAudio");
 
-            if (userInput === CORRECT_PASS) {
-                // Hide login form and reveal success message
-                loginSection.style.display = "none";
-                successSection.style.display = "block";
+            loginSection.style.display = "none";
+            successSection.style.display = "block";
 
-                // Play the success beat audio cue
-                successAudio.play().catch(error => {
-                    console.log("Audio playback blocked or file path needs adjustment:", error);
-                });
-            } else {
-                // Show error message
+            // Play the success beat audio cue
+            successAudio.play().catch(error => {
+                console.log("Audio playback blocked or file path needs adjustment:", error);
+            });
+        }
+
+        // 1. Secure Register Function
+        async function signUp() {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const errorMsg = document.getElementById("errorMsg");
+
+            if (!email || !password) {
+                errorMsg.innerText = "Please enter both email and password.";
                 errorMsg.style.display = "block";
+                return;
+            }
+
+            const { data, error } = await _supabase.auth.signUp({
+                email: email,
+                password: password,
+            });
+
+            if (error) {
+                errorMsg.innerText = error.message;
+                errorMsg.style.display = "block";
+            } else {
+                alert("Registration successful! You can now log in.");
+                errorMsg.style.display = "none";
+            }
+        }
+
+        // 2. Secure Login Function
+        async function signIn() {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const errorMsg = document.getElementById("errorMsg");
+
+            if (!email || !password) {
+                errorMsg.innerText = "Please enter both email and password.";
+                errorMsg.style.display = "block";
+                return;
+            }
+
+            const { data, error } = await _supabase.auth.signInWithPassword({
+                email: email,
+                password: password,
+            });
+
+            if (error) {
+                errorMsg.innerText = error.message;
+                errorMsg.style.display = "block";
+            } else {
+                errorMsg.style.display = "none";
+                triggerSuccess(data.user.email);
             }
         }
     </script>
-    <!-- Include Supabase JS SDK library -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script>
-  // Your Supabase Project URL using your Project ID
-  const supabaseUrl = 'https://xobbptbvknxdmajfpyoy.supabase.co'; 
-
-  // Paste your long publishable key inside the quotes below
-  const supabaseKey = 'sb_publishable_IYIGDKRlLNB0YRcVFpXBMg_klP4MQVV';   
-
-  // Initialize connection
-  const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
-
-  console.log("Supabase connected successfully!");
-</script>
 
 </body>
 </html>
