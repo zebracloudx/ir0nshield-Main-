@@ -37,7 +37,7 @@
             border-radius: 12px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
             backdrop-filter: blur(5px);
             text-align: center;
         }
@@ -120,18 +120,18 @@
         .success-screen h1 {
             color: var(--accent-green);
             margin: 0 0 1rem 0;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
         }
 
         .success-screen img {
-            width: 140px;
+            width: 130px;
             border-radius: 8px;
-            margin: 10px 0;
+            margin: 5px 0;
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
 
         .success-screen p {
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: var(--text-main);
             letter-spacing: 0.5px;
             margin: 0;
@@ -162,18 +162,27 @@
         </div>
 
         <!-- Hidden Success / Hacked Message Section -->
-        <div id="successSection" class="success-screen" style="display: none;">
-    <h1>WELCOME HOME!!! SHERLOCKS🕵️‍♂️🔍!!</h1>
-    <img src="Dancing cat.gif" alt="Dancing White Cat">
-    <p>Congratulations! Dance with me!</p>
-    
-    <!-- Secure Logout Button -->
-    <div style="margin-top: 2rem;">
-        <button onclick="signOut()" style="background: #ef4444; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold;">
-            🔒 Secure Logout
-        </button>
+        <div id="successSection" class="success-screen">
+            <h1>WELCOME HOME!!! SHERLOCKS🕵️‍♂️🔍!!</h1>
+            <img src="Dancing cat.gif" alt="Dancing White Cat">
+            <p>Congratulations! Dance with me!</p>
+            
+            <!-- Dashboard Data Container -->
+            <div style="margin-top: 1.5rem; text-align: left; background: rgba(31, 41, 55, 0.8); padding: 0.75rem; border-radius: 6px;">
+                <h4 style="color: var(--accent-green); margin: 0 0 0.5rem 0;">📋 Session Telemetry</h4>
+                <ul id="userList" style="padding-left: 18px; font-size: 0.85rem; color: #d1d5db; margin: 0;">
+                    <li>Loading cloud session...</li>
+                </ul>
+            </div>
+
+            <!-- Secure Logout Button -->
+            <div style="margin-top: 1.25rem;">
+                <button onclick="signOut()" style="background: #ef4444; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold; width: auto;">
+                    🔒 Secure Logout
+                </button>
+            </div>
+        </div>
     </div>
-</div>
 
     <!-- Audio Element for Success Sound -->
     <audio id="successAudio" preload="auto">
@@ -186,7 +195,7 @@
     <script>
         // Initialize Supabase Connection
         const supabaseUrl = 'https://xobbptbvknxdmajfpyoy.supabase.co'; 
-        const supabaseKey = 'sb_publishable_IYIGDKRlLNB0YRcVFpXBMg_klP4MQVV';   
+        const supabaseKey = 'sb_publishable_IYIGDKRlLNB0YRcVFpXBMg_klP4MQVV';    
         const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
         console.log("Supabase connected successfully!");
@@ -204,6 +213,28 @@
             successAudio.play().catch(error => {
                 console.log("Audio playback blocked or file path needs adjustment:", error);
             });
+
+            // Fetch live session telemetry data from Supabase
+            fetchDashboardData();
+        }
+
+        // Fetch Database / Session Data Function
+        async function fetchDashboardData() {
+            const userListElement = document.getElementById("userList");
+            const { data: { session }, error } = await _supabase.auth.getSession();
+            
+            if (error) {
+                userListElement.innerHTML = `<li style="color: var(--error-red);">Error: ${error.message}</li>`;
+                return;
+            }
+
+            if (session) {
+                userListElement.innerHTML = `
+                    <li><strong>Active User:</strong> ${session.user.email}</li>
+                    <li><strong>Last Login:</strong> ${new Date(session.user.last_sign_in_at).toLocaleTimeString()}</li>
+                    <li><strong>Database Sync:</strong> Secure ✅</li>
+                `;
+            }
         }
 
         // 1. Secure Register Function
@@ -257,14 +288,16 @@
                 triggerSuccess(data.user.email);
             }
         }
-        // Secure Logout Function
-async function signOut() {
-    const { error } = await _supabase.auth.signOut();
-    if (!error) {
-        location.reload(); // Resets the page back to the login state cleanly
-    } else {
-        alert("Error logging out: " + error.message);
-    }
-}
+
+        // 3. Secure Logout Function
+        async function signOut() {
+            const { error } = await _supabase.auth.signOut();
+            if (!error) {
+                location.reload(); // Resets the page back to the login state cleanly
+            } else {
+                alert("Error logging out: " + error.message);
+            }
+        }
+    </script>
 </body>
 </html>
