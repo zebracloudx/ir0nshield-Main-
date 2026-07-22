@@ -179,6 +179,21 @@
             }
         }
     </script>
+    <!-- Include Supabase JS SDK library -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+  // Your Supabase Project URL using your Project ID
+  const supabaseUrl = 'https://xobbptbvknxdmajfpyoy.supabase.co'; 
+
+  // Paste your long publishable key inside the quotes below
+  const supabaseKey = 'sb_publishable_IYIGDKRlLNB0YRcVFpXBMg_klP4MQVV';   
+
+  // Initialize connection
+  const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+  console.log("Supabase connected successfully!");
+</script>
 
 </body>
 </html>
