@@ -257,7 +257,14 @@
                 triggerSuccess(data.user.email);
             }
         }
-        
+        // Secure Logout Function
+async function signOut() {
+    const { error } = await _supabase.auth.signOut();
+    if (!error) {
+        location.reload(); // Resets the page back to the login state cleanly
+    } else {
+        alert("Error logging out: " + error.message);
+    }
 }
 </body>
 </html>
