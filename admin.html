@@ -336,10 +336,10 @@
             } else {
                 errorMsg.style.display = "none";
 
-                // Log the successful login entry to Supabase audit trail table using lowercase columns
+                // Log the successful login entry to Supabase using exact capitalized column names
                 try {
                     await _supabase.from('audit_logs').insert([
-                        { email: data.user.email, action: 'ADMIN_LOGIN' }
+                        { Email: data.user.email, Action: 'ADMIN_LOGIN' }
                     ]);
                 } catch (logErr) {
                     console.log("Audit log table note:", logErr);
