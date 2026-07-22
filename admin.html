@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IronShield | Admin Portal</title>
+    <!-- Suppress favicon 404 error -->
+    <link rel="icon" href="data:,">
     <style>
         :root {
             --accent-green: #10b981;
@@ -173,6 +175,7 @@
                 <ul id="userList" style="padding-left: 18px; font-size: 0.85rem; color: #d1d5db; margin: 0;">
                     <li>Loading cloud session...</li>
                 </ul>
+                <p id="timerDisplay" style="font-size: 0.75rem; color: #9ca3af; margin-top: 8px; text-align: right;">Auto-logout in: 60s</p>
             </div>
 
             <!-- Secure Logout Button -->
@@ -198,6 +201,10 @@
         const supabaseKey = 'sb_publishable_IYIGDKRlLNB0YRcVFpXBMg_klP4MQVV';    
         const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
+        let inactivityTimer = null;
+        let countdownInterval = null;
+        const SESSION_TIMEOUT_MS = 60 * 1000; // Exactly 1 Minute
+
         console.log("Supabase connected successfully!");
 
         // Trigger Success UI & Audio
@@ -209,14 +216,57 @@
             loginSection.style.display = "none";
             successSection.style.display = "block";
 
-            // Play the success beat audio cue safely
+            // Play the success audio cue safely
             successAudio.play().catch(error => {
                 console.log("Audio playback skipped or file missing:", error);
             });
 
             // Fetch live session telemetry data from Supabase
             fetchDashboardData();
+
+            // Start the 1-minute strict inactivity/page stay timer
+            startSessionTimeout();
         }
+
+        // Start 1-minute expiration timer
+        function startSessionTimeout() {
+            let timeLeft = 60;
+            const timerDisplay = document.getElementById("timerDisplay");
+
+            // Clear any previous running timers
+            clearInterval(countdownInterval);
+            clearTimeout(inactivityTimer);
+
+            // Update countdown text every second
+            countdownInterval = setInterval(() => {
+                timeLeft--;
+                if (timerDisplay) {
+                    timerDisplay.innerText = `Auto-logout in: ${timeLeft}s`;
+                }
+                if (timeLeft <= 0) {
+                    clearInterval(countdownInterval);
+                }
+            }, 1000);
+
+            // Force automatic logout after 1 minute
+            inactivityTimer = setTimeout(() => {
+                console.log("1-minute session time limit reached. Logging out...");
+                signOut();
+            }, SESSION_TIMEOUT_MS);
+        }
+
+        // Reset timeout tracker on user activity inside the admin dashboard
+        function resetSessionTimer() {
+            const successSection = document.getElementById("successSection");
+            if (successSection.style.display === "block") {
+                startSessionTimeout();
+            }
+        }
+
+        // Attach user movement activity listeners to reset timer
+        window.addEventListener('mousemove', resetSessionTimer);
+        window.addEventListener('keypress', resetSessionTimer);
+        window.addEventListener('click', resetSessionTimer);
 
         // Fetch Database / Session Data Function
         async function fetchDashboardData() {
@@ -301,15 +351,24 @@
 
         // 3. Secure Logout Function
         async function signOut() {
-            const { error } = await _supabase.auth.signOut();
-            if (!error) {
-                location.reload(); 
-            } else {
-                alert("Error logging out: " + error.message);
-            }
+            clearTimeout(inactivityTimer);
+            clearInterval(countdownInterval);
+            await _supabase.auth.signOut();
+            location.reload(); 
         }
 
-        // 4. Session Persistence Check on Page Load
+        // 4. Force immediate logout when page is closed, hidden, or unloaded
+        window.addEventListener('pagehide', () => {
+            _supabase.auth.signOut();
+        });
+
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'hidden') {
+                signOut();
+            }
+        });
+
+        // 5. Session Persistence Check on Page Load
         async function checkExistingSession() {
             const { data: { session }, error } = await _supabase.auth.getSession();
             if (session) {
