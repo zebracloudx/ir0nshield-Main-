@@ -339,8 +339,12 @@
                 // Log the successful login entry to Supabase using exact capitalized column names
                 try {
                     await _supabase.from('audit_logs').insert([
-                        { Email: data.user.email, Action: 'ADMIN_LOGIN' }
-                    ]);
+    { 
+        Email: data.user.email, 
+        Action: 'ADMIN_LOGIN', 
+        Timestamp: new Date().toISOString() 
+    }
+]);
                 } catch (logErr) {
                     console.log("Audit log table note:", logErr);
                 }
