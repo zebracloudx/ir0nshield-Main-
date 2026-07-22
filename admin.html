@@ -164,19 +164,29 @@
         <!-- Hidden Success / Hacked Message Section -->
         <div id="successSection" class="success-screen">
             <h1>WELCOME HOME! SHERLOCKS🕵️‍♂️</h1>
-            <img src="CBB.jpeg" alt="Dancing White Cat">
+            <img src="CBB.jpeg" alt="Dashboard Visual">
             <p>Congratulations!!</p>
             
             <!-- Dashboard Data Container -->
-            <div style="margin-top: 1.5rem; text-align: left; background: rgba(31, 41, 55, 0.8); padding: 0.75rem; border-radius: 6px;">
+            <div style="margin-top: 1.2rem; text-align: left; background: rgba(31, 41, 55, 0.8); padding: 0.75rem; border-radius: 6px;">
                 <h4 style="color: var(--accent-green); margin: 0 0 0.5rem 0;">📋 Session Telemetry</h4>
                 <ul id="userList" style="padding-left: 18px; font-size: 0.85rem; color: #d1d5db; margin: 0;">
                     <li>Loading cloud session...</li>
                 </ul>
             </div>
 
+            <!-- Lab Quick-Launch Control Panel -->
+            <div style="margin-top: 1rem; text-align: left; background: rgba(31, 41, 55, 0.8); padding: 0.75rem; border-radius: 6px;">
+                <h4 style="color: var(--accent-green); margin: 0 0 0.4rem 0;">⚡ Lab Quick-Launch</h4>
+                <div style="display: flex; gap: 8px;">
+                    <button onclick="pingLab('Kali-VM')" style="flex: 1; padding: 6px; font-size: 0.8rem; background: #374151; color: white; border: 1px solid var(--border-color); margin-top: 0;">Ping Kali</button>
+                    <button onclick="pingLab('Tailscale-Mesh')" style="flex: 1; padding: 6px; font-size: 0.8rem; background: #374151; color: white; border: 1px solid var(--border-color); margin-top: 0;">Tailscale</button>
+                </div>
+                <div id="labStatus" style="font-size: 0.75rem; color: var(--accent-green); margin-top: 0.4rem;"></div>
+            </div>
+
             <!-- Secure Logout Button -->
-            <div style="margin-top: 1.25rem;">
+            <div style="margin-top: 1rem;">
                 <button onclick="signOut()" style="background: #ef4444; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold; width: auto;">
                     🔒 Secure Logout
                 </button>
@@ -237,6 +247,18 @@
             }
         }
 
+        // Lab Quick-Launch Tool Simulation
+        function pingLab(target) {
+            const statusDiv = document.getElementById("labStatus");
+            statusDiv.style.color = "#f3f4f6";
+            statusDiv.innerText = `[+] Probing ${target}...`;
+            
+            setTimeout(() => {
+                statusDiv.style.color = "var(--accent-green)";
+                statusDiv.innerText = `[✓] ${target} is online.`;
+            }, 800);
+        }
+
         // 1. Secure Register Function
         async function signUp() {
             const email = document.getElementById("email").value;
@@ -263,7 +285,7 @@
             }
         }
 
-        // 2. Secure Login Function
+        // 2. Secure Login Function (Includes Audit Trail Log)
         async function signIn() {
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
@@ -285,6 +307,16 @@
                 errorMsg.style.display = "block";
             } else {
                 errorMsg.style.display = "none";
+
+                // Log the successful login entry to Supabase audit trail table (optional backend table)
+                try {
+                    await _supabase.from('audit_logs').insert([
+                        { email: data.user.email, action: 'ADMIN_LOGIN' }
+                    ]);
+                } catch (logErr) {
+                    console.log("Audit log table note: Make sure 'audit_logs' table exists if tracking database logs.", logErr);
+                }
+
                 triggerSuccess(data.user.email);
             }
         }
@@ -298,6 +330,17 @@
                 alert("Error logging out: " + error.message);
             }
         }
+
+        // 4. Session Persistence Check on Page Load
+        async function checkExistingSession() {
+            const { data: { session }, error } = await _supabase.auth.getSession();
+            if (session) {
+                triggerSuccess(session.user.email);
+            }
+        }
+
+        // Execute session check immediately when script loads
+        checkExistingSession();
     </script>
 </body>
 </html>
