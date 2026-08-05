@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IronShield | Threat Matrix</title>
-    <meta name="description" content="IronShield Threat Intelligence Matrix and Cyber Defense Sandbox">
+    <title>IronShield | Main Terminal</title>
+    <meta name="description" content="IronShield Threat Intelligence Matrix and Admin Security Portal Sandbox">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
 
@@ -33,17 +33,17 @@
         }
 
         .card {
-            background-color: rgba(10, 15, 30, 0.85);
+            background-color: rgba(10, 15, 30, 0.88);
             border: 2px solid #00ffcc;
             border-radius: 12px;
-            padding: 40px;
+            padding: 35px 30px;
             box-shadow: 0 0 30px rgba(0, 255, 204, 0.25), inset 0 0 15px rgba(0, 255, 204, 0.1);
             text-align: center;
             position: relative;
         }
 
         .card::before {
-            content: "SECURITY OVERRIDE";
+            content: "MAIN TERMINAL";
             position: absolute;
             top: -12px;
             left: 50%;
@@ -60,18 +60,64 @@
         h1 {
             color: #00ffcc;
             font-size: 2rem;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             text-shadow: 0 0 10px rgba(0, 255, 204, 0.6);
             letter-spacing: 2px;
         }
 
         p {
             color: #8be9fd;
-            font-size: 0.9rem;
-            line-height: 1.6;
-            margin-bottom: 30px;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin-bottom: 25px;
             text-transform: uppercase;
             letter-spacing: 1px;
+        }
+
+        /* Terminal Tab Navigation */
+        .tab-nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 255, 204, 0.3);
+            padding-bottom: 10px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: rgba(11, 15, 25, 0.6);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            color: #8be9fd;
+            padding: 10px 5px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 1px;
+        }
+
+        .tab-btn.active {
+            background: rgba(0, 255, 204, 0.15);
+            border-color: #00ffcc;
+            color: #00ffcc;
+            box-shadow: 0 0 12px rgba(0, 255, 204, 0.3);
+        }
+
+        .tab-btn.admin-tab.active {
+            background: rgba(244, 63, 94, 0.15);
+            border-color: #f43f5e;
+            color: #f43f5e;
+            box-shadow: 0 0 12px rgba(244, 63, 94, 0.3);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
         }
 
         .pulse-box {
@@ -79,12 +125,12 @@
             border: 1px dashed #00ffcc;
             padding: 20px;
             border-radius: 8px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .status-text {
             color: #ff007f;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: bold;
             text-shadow: 0 0 8px rgba(255, 0, 127, 0.6);
             letter-spacing: 1px;
@@ -94,9 +140,9 @@
             background: transparent;
             color: #00ffcc;
             border: 2px solid #00ffcc;
-            padding: 15px 30px;
+            padding: 14px 25px;
             font-family: 'Orbitron', sans-serif;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: bold;
             border-radius: 6px;
             cursor: pointer;
@@ -113,10 +159,68 @@
             box-shadow: 0 0 25px #00ffcc, 0 0 50px #00ffcc;
         }
 
+        /* Admin Form Embedded Styles */
+        .admin-form-container {
+            text-align: left;
+            background: rgba(11, 15, 25, 0.7);
+            border: 1px solid rgba(244, 63, 94, 0.4);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.75rem;
+            color: #8be9fd;
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            background: rgba(5, 8, 15, 0.9);
+            border: 1px solid rgba(0, 255, 204, 0.4);
+            border-radius: 6px;
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 0.85rem;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #00ffcc;
+            box-shadow: 0 0 8px rgba(0, 255, 204, 0.4);
+        }
+
+        .btn-admin-submit {
+            background-color: #f43f5e;
+            color: #0b0f19;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            font-size: 0.9rem;
+            cursor: pointer;
+            width: 100%;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+
+        .btn-admin-submit:hover {
+            background-color: #ff007f;
+            box-shadow: 0 0 15px rgba(244, 63, 94, 0.6);
+        }
+
         .nav-links-container {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
             margin-top: 25px;
         }
 
@@ -135,25 +239,22 @@
             text-shadow: 0 0 8px rgba(0, 255, 204, 0.6);
         }
 
-        #response-msg {
-            margin-top: 20px;
+        #response-msg, #admin-msg {
+            margin-top: 15px;
             font-size: 0.85rem;
             letter-spacing: 1px;
         }
 
         @media (max-width: 480px) {
             .card {
-                padding: 25px 18px;
+                padding: 25px 15px;
             }
             h1 {
                 font-size: 1.5rem;
             }
-            p {
-                font-size: 0.8rem;
-            }
-            .btn-cyber {
-                padding: 12px 18px;
-                font-size: 0.85rem;
+            .tab-btn {
+                font-size: 0.7rem;
+                padding: 8px 3px;
             }
         }
     </style>
@@ -165,22 +266,60 @@
             <h1>IRONSHIELD</h1>
             <p>Advanced Threat Intelligence Matrix & Cyber Defense Sandbox</p>
             
-            <div class="pulse-box">
-                <div class="status-text">STATUS: DEFENSE GRID ONLINE</div>
+            <!-- Tab Control -->
+            <div class="tab-nav">
+                <button class="tab-btn active" onclick="switchTab('pulse')">⚡ Telemetry Grid</button>
+                <button class="tab-btn admin-tab" onclick="switchTab('admin')">🔒 Admin Portal</button>
             </div>
 
-            <button class="btn-cyber" onclick="pingCore()">Engage Telemetry Pulse</button>
-            
-            <div id="response-msg"></div>
+            <!-- Tab 1: Pulse Grid -->
+            <div id="tab-pulse" class="tab-content active">
+                <div class="pulse-box">
+                    <div class="status-text">STATUS: DEFENSE GRID ONLINE</div>
+                </div>
+                <button class="btn-cyber" onclick="pingCore()">Engage Telemetry Pulse</button>
+                <div id="response-msg"></div>
+            </div>
+
+            <!-- Tab 2: Embedded Admin Login Portal -->
+            <div id="tab-admin" class="tab-content">
+                <div class="admin-form-container">
+                    <form id="embedded-login-form" onsubmit="handleEmbeddedLogin(event)">
+                        <div class="input-group">
+                            <label for="admin-email">ADMIN EMAIL</label>
+                            <input type="email" id="admin-email" required placeholder="admin@ironshield.io">
+                        </div>
+                        <div class="input-group">
+                            <label for="admin-password">PASSWORD</label>
+                            <input type="password" id="admin-password" required placeholder="••••••••">
+                        </div>
+                        <button type="submit" class="btn-admin-submit">AUTHENTICATE & LOG IN</button>
+                        <div id="admin-msg"></div>
+                    </form>
+                </div>
+            </div>
 
             <div class="nav-links-container">
                 <a href="about.html" class="nav-link">&gt;&gt; Access System Intel (About Us)</a>
-                <a href="admin.html" class="nav-link">&gt;&gt; 🔒 Admin Security Portal</a>
+                <a href="admin.html" class="nav-link" style="font-size:0.75rem; color:#cbd5e1;">&gt;&gt; Standalone Admin Page</a>
             </div>
         </div>
     </div>
 
     <script>
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+            if (tabName === 'pulse') {
+                document.querySelectorAll('.tab-btn')[0].classList.add('active');
+                document.getElementById('tab-pulse').classList.add('active');
+            } else {
+                document.querySelectorAll('.tab-btn')[1].classList.add('active');
+                document.getElementById('tab-admin').classList.add('active');
+            }
+        }
+
         async function pingCore() {
             const msgEl = document.getElementById('response-msg');
             msgEl.style.color = '#8be9fd';
@@ -205,6 +344,51 @@
             } catch (err) {
                 msgEl.style.color = '#ff007f';
                 msgEl.innerText = 'CRITICAL: CONNECTION FAILED';
+            }
+        }
+
+        async function handleEmbeddedLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('admin-email').value;
+            const password = document.getElementById('admin-password').value;
+            const msgEl = document.getElementById('admin-msg');
+            
+            msgEl.style.color = "#38bdf8";
+            msgEl.textContent = "Authenticating with MongoDB backend...";
+
+            try {
+                const response = await fetch('/api/test-sync', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        user: email, 
+                        password: password, 
+                        action: 'ADMIN_LOGIN_TIMESTAMP',
+                        timestamp: new Date().toISOString() 
+                    })
+                });
+
+                const rawText = await response.text();
+                let result;
+                try {
+                    result = JSON.parse(rawText);
+                } catch (e) {
+                    result = { message: rawText || "Server response format error" };
+                }
+
+                if (response.ok) {
+                    msgEl.style.color = "#4ade80";
+                    msgEl.textContent = "MongoDB Sync Successful! Redirecting to Dashboard...";
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 600);
+                } else {
+                    msgEl.style.color = "#f43f5e";
+                    msgEl.textContent = result.message || "Authentication failed.";
+                }
+            } catch (err) {
+                msgEl.style.color = "#f43f5e";
+                msgEl.textContent = "Network error: " + err.message;
             }
         }
     </script>

@@ -83,17 +83,24 @@
             background-color: rgba(56, 189, 248, 0.2);
             color: var(--accent-cyan);
             border: 1px solid var(--accent-cyan);
-            padding: 0.6rem 1rem;
+            padding: 0.75rem 1rem;
             border-radius: 6px;
             font-weight: bold;
             cursor: pointer;
             width: 100%;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             transition: all 0.2s;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
         }
         .btn-audio:hover {
             background-color: var(--accent-cyan);
             color: #0b0f19;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.6);
+        }
+        .btn-audio.playing {
+            background-color: rgba(74, 222, 128, 0.2);
+            color: var(--accent-green);
+            border-color: var(--accent-green);
         }
         .btn-logout {
             background-color: var(--accent-pink);
@@ -106,6 +113,11 @@
             width: 100%;
             text-decoration: none;
         }
+        #audio-status-tip {
+            font-size: 0.75rem;
+            color: var(--accent-cyan);
+            margin-top: 6px;
+        }
         @media (max-width: 480px) {
             .dashboard-card {
                 padding: 1.5rem 1rem;
@@ -116,7 +128,7 @@
 <body>
 
     <!-- Background Audio / Music Element -->
-    <audio id="bg-audio" loop>
+    <audio id="bg-audio" loop preload="auto">
         <source src="sherlock_holmes.mp3" type="audio/mpeg">
     </audio>
 
@@ -139,8 +151,9 @@
         </div>
 
         <div class="action-buttons">
-            <button type="button" id="audio-toggle-btn" onclick="toggleAudio()" class="btn-audio">🎵 Play Ambient Theme</button>
-            <button type="button" onclick="window.location.href='admin.html'" class="btn-logout">🔒 Secure Logout</button>
+            <button type="button" id="audio-toggle-btn" onclick="toggleAudio()" class="btn-audio">🎵 Click to Play Audio Theme</button>
+            <div id="audio-status-tip">Browsers require 1 click to enable audio sound</div>
+            <button type="button" onclick="window.location.href='index.html'" class="btn-logout">🔒 Secure Logout</button>
         </div>
     </div>
 
@@ -149,27 +162,48 @@
 
         const audio = document.getElementById('bg-audio');
         const audioBtn = document.getElementById('audio-toggle-btn');
+        const tipEl = document.getElementById('audio-status-tip');
 
-        // Attempt initial autoplay if allowed by browser
-        window.addEventListener('DOMContentLoaded', () => {
+        audio.volume = 0.85;
+
+        // Try playing audio on page load or first user click anywhere on page
+        function playAudioTrack() {
             const playPromise = audio.play();
             if (playPromise !== undefined) {
                 playPromise.then(() => {
-                    audioBtn.textContent = '⏸️ Mute Audio';
-                }).catch(() => {
-                    // Autoplay was prevented by browser policy, user click required
-                    audioBtn.textContent = '🎵 Play Ambient Theme';
+                    audioBtn.textContent = '🔊 Mute Audio Theme';
+                    audioBtn.classList.add('playing');
+                    tipEl.textContent = '🎶 Sherlock Holmes Theme Playing';
+                    tipEl.style.color = 'var(--accent-green)';
+                }).catch(err => {
+                    audioBtn.textContent = '🎵 Click to Play Audio Theme';
+                    audioBtn.classList.remove('playing');
+                    tipEl.textContent = 'Click the button above to start background music';
+                    tipEl.style.color = 'var(--accent-cyan)';
                 });
             }
-        });
+        }
+
+        // Trigger attempt on initial load
+        window.addEventListener('DOMContentLoaded', playAudioTrack);
+
+        // Automatic audio start on first click anywhere on dashboard
+        document.body.addEventListener('click', function autoPlayOnce() {
+            if (audio.paused) {
+                playAudioTrack();
+            }
+            document.body.removeEventListener('click', autoPlayOnce);
+        }, { once: true });
 
         function toggleAudio() {
             if (audio.paused) {
-                audio.play();
-                audioBtn.textContent = '⏸️ Mute Audio';
+                playAudioTrack();
             } else {
                 audio.pause();
-                audioBtn.textContent = '🎵 Play Ambient Theme';
+                audioBtn.textContent = '🎵 Click to Play Audio Theme';
+                audioBtn.classList.remove('playing');
+                tipEl.textContent = 'Audio Muted';
+                tipEl.style.color = 'var(--text-muted)';
             }
         }
     </script>
