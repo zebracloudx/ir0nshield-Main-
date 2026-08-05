@@ -3,385 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IronShield | Admin Portal</title>
-    <!-- Suppress favicon 404 error -->
-    <link rel="icon" href="data:,">
+    <title>IronShield | Admin Login</title>
     <style>
         :root {
-            --accent-green: #10b981;
-            --text-main: #f3f4f6;
-            --border-color: rgba(75, 85, 99, 0.4);
-            --error-red: #ef4444;
+            --accent-cyan: #38bdf8;
+            --accent-pink: #f43f5e;
+            --accent-green: #4ade80;
+            --text-main: #ffffff;
+            --text-muted: #cbd5e1;
         }
-
+        * {
+            box-sizing: border-box;
+        }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            padding: 0;
-            height: 100vh;
+            padding: 20px 15px;
+            color: var(--text-main);
+            background: linear-gradient(rgba(11, 15, 25, 0.8), rgba(11, 15, 25, 0.9)), 
+                        url('Gemini_Generated_Image_i7d7n6i7d7n6i7d7.png');
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
-            color: var(--text-main);
-
-            /* --- BACKGROUND IMAGE --- */
-            background: linear-gradient(rgba(11, 15, 25, 0.4), rgba(11, 15, 25, 0.8)), 
-                        url(Gemini_Generated_Image_ekcz86ekcz86ekcz.png) no-repeat center center fixed;
-            background-size: cover;
+            overflow-x: hidden;
         }
-
-        /* Card Container */
-        .card {
-            background: rgba(17, 24, 39, 0.9);
-            border: 1px solid var(--border-color);
+        .login-card {
+            background-color: rgba(17, 24, 39, 0.9);
+            border: 1px solid var(--accent-pink);
+            border-radius: 10px;
             padding: 2.5rem;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
             width: 100%;
-            max-width: 420px;
-            backdrop-filter: blur(5px);
+            max-width: 400px;
             text-align: center;
+            box-shadow: 0 0 25px rgba(244, 63, 94, 0.3);
         }
-
         h2 {
-            margin-bottom: 1.5rem;
-            color: var(--text-main);
+            font-family: 'Courier New', Courier, monospace;
+            color: var(--accent-pink);
+            margin-top: 0;
         }
-
         .input-group {
             margin-bottom: 1.25rem;
             text-align: left;
         }
-
         label {
             display: block;
-            margin-bottom: 0.5rem;
             font-size: 0.85rem;
-            color: #9ca3af;
+            color: var(--text-muted);
+            margin-bottom: 0.4rem;
         }
-
         input {
             width: 100%;
             padding: 0.75rem;
-            background: rgba(31, 41, 55, 0.8);
-            border: 1px solid var(--border-color);
+            background: rgba(11, 15, 25, 0.8);
+            border: 1px solid rgba(56, 189, 248, 0.3);
             border-radius: 6px;
             color: var(--text-main);
-            font-size: 1rem;
             box-sizing: border-box;
-            margin-bottom: 0.5rem;
         }
-
-        input:focus {
-            outline: none;
-            border-color: var(--accent-green);
-        }
-
-        button {
+        .btn-submit {
             width: 100%;
-            padding: 0.75rem;
-            background-color: var(--accent-green);
-            color: #000;
+            background-color: var(--accent-pink);
+            color: #0b0f19;
             border: none;
+            padding: 0.75rem;
             border-radius: 6px;
             font-weight: bold;
-            font-size: 1rem;
             cursor: pointer;
-            transition: opacity 0.2s;
             margin-top: 0.5rem;
         }
-
-        button:hover {
-            opacity: 0.9;
-        }
-
-        .btn-secondary {
-            background-color: transparent;
-            border: 1px solid var(--accent-green);
-            color: var(--accent-green);
-            margin-top: 0.5rem;
-        }
-
-        .btn-secondary:hover {
-            background-color: rgba(16, 185, 129, 0.1);
-        }
-
-        .error-msg {
-            color: var(--error-red);
+        .back-link {
+            display: inline-block;
+            margin-top: 1.5rem;
+            color: var(--accent-cyan);
+            text-decoration: none;
             font-size: 0.85rem;
-            margin-top: 0.75rem;
-            display: none;
         }
-
-        /* Success Screen (Hidden by default) */
-        .success-screen {
-            display: none;
-        }
-
-        .success-screen h1 {
-            color: var(--accent-green);
-            margin: 0 0 1rem 0;
-            font-size: 1.6rem;
-        }
-
-        .success-screen img {
-            width: 130px;
-            border-radius: 8px;
-            margin: 5px 0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        }
-
-        .success-screen p {
-            font-size: 1rem;
-            color: var(--text-main);
-            letter-spacing: 0.5px;
-            margin: 0;
+        #error-msg {
+            color: var(--accent-pink);
+            font-size: 0.85rem;
+            margin-top: 1rem;
         }
     </style>
 </head>
 <body>
-
-    <div class="card">
-        <!-- Login Form Section -->
-        <div id="loginSection">
-            <h2>🔐 Admin Portal</h2>
-            
+    <div class="login-card">
+        <h2>🔒 Admin Portal</h2>
+        <form id="login-form" onsubmit="handleMongoLogin(event)">
             <div class="input-group">
-                <label for="email">Email Address</label>
-                <input type="email" id="email" placeholder="Enter your email...">
+                <label for="email">Admin Email</label>
+                <input type="email" id="email" required placeholder="">
             </div>
-
             <div class="input-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" placeholder="Enter secure password...">
+                <input type="password" id="password" required placeholder="">
             </div>
-
-            <button onclick="signIn()">Log In</button>
-            <button class="btn-secondary" onclick="signUp()">Register Account</button>
-            
-            <div id="errorMsg" class="error-msg">Authentication failed. Check your inputs.</div>
-        </div>
-
-        <!-- Success / Welcome Message Section -->
-        <div id="successSection" class="success-screen">
-            <h1>WELCOME HOME! SHERLOCKS🕵️‍♂️</h1>
-            <img src="CBB.jpeg" alt="Dashboard Visual" onerror="this.style.display='none'">
-            <p>Congratulations!!</p>
-            
-            <!-- Dashboard Data Container -->
-            <div style="margin-top: 1.2rem; text-align: left; background: rgba(31, 41, 55, 0.8); padding: 0.75rem; border-radius: 6px;">
-                <h4 style="color: var(--accent-green); margin: 0 0 0.5rem 0;">📋 Session Telemetry</h4>
-                <ul id="userList" style="padding-left: 18px; font-size: 0.85rem; color: #d1d5db; margin: 0;">
-                    <li>Loading cloud session...</li>
-                </ul>
-                <p id="timerDisplay" style="font-size: 0.75rem; color: #9ca3af; margin-top: 8px; text-align: right;">Auto-logout in: 60s</p>
-            </div>
-
-            <!-- Secure Logout Button -->
-            <div style="margin-top: 1rem;">
-                <button onclick="signOut()" style="background: #ef4444; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold; width: auto;">
-                    🔒 Secure Logout
-                </button>
-            </div>
-        </div>
+            <button type="submit" class="btn-submit">Authenticate</button>
+            <div id="error-msg"></div>
+        </form>
+        <a href="index.html" class="back-link">&larr; Back to Main Terminal</a>
     </div>
 
-    <!-- Audio Element for Success Sound -->
-    <audio id="successAudio" preload="auto">
-        <source src="sherlock_holmes.mp3" type="audio/mpeg">
-    </audio>
-
-    <!-- Include Supabase JS SDK library -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
     <script>
-        // Initialize Supabase Connection
-        const supabaseUrl = 'https://xobbptbvknxdmajfpyoy.supabase.co'; 
-        const supabaseKey = 'sb_publishable_IYIGDKRlLNB0YRcVFpXBMg_klP4MQVV';    
-        const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
+    async function handleMongoLogin(event) {
+        event.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const errorDiv = document.getElementById('error-msg');
+        
+        errorDiv.style.color = "var(--accent-cyan)";
+        errorDiv.textContent = "Connecting to MongoDB backend...";
 
-        let inactivityTimer = null;
-        let countdownInterval = null;
-        const SESSION_TIMEOUT_MS = 60 * 1000; // Exactly 1 Minute
-
-        console.log("Supabase connected successfully!");
-
-        // Trigger Success UI & Audio
-        function triggerSuccess(userEmail) {
-            const loginSection = document.getElementById("loginSection");
-            const successSection = document.getElementById("successSection");
-            const successAudio = document.getElementById("successAudio");
-
-            loginSection.style.display = "none";
-            successSection.style.display = "block";
-
-            // Play the success audio cue safely
-            successAudio.play().catch(error => {
-                console.log("Audio playback skipped or file missing:", error);
+        try {
+            const response = await fetch('/api/test-sync', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    user: email, 
+                    password: password, 
+                    action: 'ADMIN_LOGIN_TIMESTAMP',
+                    timestamp: new Date().toISOString() 
+                })
             });
 
-            // Fetch live session telemetry data from Supabase
-            fetchDashboardData();
-
-            // Start the 1-minute strict inactivity/page stay timer
-            startSessionTimeout();
-        }
-
-        // Start 1-minute expiration timer
-        function startSessionTimeout() {
-            let timeLeft = 60;
-            const timerDisplay = document.getElementById("timerDisplay");
-
-            // Clear any previous running timers
-            clearInterval(countdownInterval);
-            clearTimeout(inactivityTimer);
-
-            // Update countdown text every second
-            countdownInterval = setInterval(() => {
-                timeLeft--;
-                if (timerDisplay) {
-                    timerDisplay.innerText = `Auto-logout in: ${timeLeft}s`;
-                }
-                if (timeLeft <= 0) {
-                    clearInterval(countdownInterval);
-                }
-            }, 1000);
-
-            // Force automatic logout after 1 minute
-            inactivityTimer = setTimeout(() => {
-                console.log("1-minute session time limit reached. Logging out...");
-                signOut();
-            }, SESSION_TIMEOUT_MS);
-        }
-
-        // Reset timeout tracker on user activity inside the admin dashboard
-        function resetSessionTimer() {
-            const successSection = document.getElementById("successSection");
-            if (successSection.style.display === "block") {
-                startSessionTimeout();
-            }
-        }
-
-        // Attach user movement activity listeners to reset timer
-        window.addEventListener('mousemove', resetSessionTimer);
-        window.addEventListener('keypress', resetSessionTimer);
-        window.addEventListener('click', resetSessionTimer);
-
-        // Fetch Database / Session Data Function
-        async function fetchDashboardData() {
-            const userListElement = document.getElementById("userList");
-            const { data: { session }, error } = await _supabase.auth.getSession();
-            
-            if (error) {
-                userListElement.innerHTML = `<li style="color: var(--error-red);">Error: ${error.message}</li>`;
-                return;
+            // Read raw text first to prevent JSON parse crashes
+            const rawText = await response.text();
+            let result;
+            try {
+                result = JSON.parse(rawText);
+            } catch (e) {
+                result = { message: rawText || "Server responded with non-JSON format" };
             }
 
-            if (session) {
-                userListElement.innerHTML = `
-                    <li><strong>Active User:</strong> ${session.user.email}</li>
-                    <li><strong>Last Login:</strong> ${new Date(session.user.last_sign_in_at).toLocaleTimeString()}</li>
-                    <li><strong>Database Sync:</strong> Secure ✅</li>
-                `;
-            }
-        }
-
-        // 1. Secure Register Function
-        async function signUp() {
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
-            const errorMsg = document.getElementById("errorMsg");
-
-            if (!email || !password) {
-                errorMsg.innerText = "Please enter both email and password.";
-                errorMsg.style.display = "block";
-                return;
-            }
-
-            const { data, error } = await _supabase.auth.signUp({
-                email: email,
-                password: password,
-            });
-
-            if (error) {
-                errorMsg.innerText = error.message;
-                errorMsg.style.display = "block";
+            if (response.ok) {
+                errorDiv.style.color = "var(--accent-green)";
+                errorDiv.textContent = "Synced to MongoDB successfully! Redirecting...";
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 800);
             } else {
-                alert("Registration successful! You can now log in.");
-                errorMsg.style.display = "none";
+                errorDiv.style.color = "var(--accent-pink)";
+                errorDiv.textContent = result.message || "MongoDB sync failed.";
             }
+        } catch (err) {
+            errorDiv.style.color = "var(--accent-pink)";
+            errorDiv.textContent = "Network error: " + err.message;
         }
-
-        // 2. Secure Login Function (Includes Audit Trail Log)
-        async function signIn() {
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
-            const errorMsg = document.getElementById("errorMsg");
-
-            if (!email || !password) {
-                errorMsg.innerText = "Please enter both email and password.";
-                errorMsg.style.display = "block";
-                return;
-            }
-
-            const { data, error } = await _supabase.auth.signInWithPassword({
-                email: email,
-                password: password,
-            });
-
-            if (error) {
-                errorMsg.innerText = error.message;
-                errorMsg.style.display = "block";
-            } else {
-                errorMsg.style.display = "none";
-
-                // Log the successful login entry to Supabase using exact capitalized column names
-                try {
-                    await _supabase.from('audit_logs').insert([
-    { 
-        Email: data.user.email, 
-        Action: 'ADMIN_LOGIN', 
-        Timestamp: new Date().toISOString() 
     }
-]);
-                } catch (logErr) {
-                    console.log("Audit log table note:", logErr);
-                }
-
-                triggerSuccess(data.user.email);
-            }
-        }
-
-        // 3. Secure Logout Function
-        async function signOut() {
-            clearTimeout(inactivityTimer);
-            clearInterval(countdownInterval);
-            await _supabase.auth.signOut();
-            location.reload(); 
-        }
-
-        // 4. Force immediate logout when page is closed, hidden, or unloaded
-        window.addEventListener('pagehide', () => {
-            _supabase.auth.signOut();
-        });
-
-        document.addEventListener('visibilitychange', () => {
-            if (document.visibilityState === 'hidden') {
-                signOut();
-            }
-        });
-
-        // 5. Session Persistence Check on Page Load
-        async function checkExistingSession() {
-            const { data: { session }, error } = await _supabase.auth.getSession();
-            if (session) {
-                triggerSuccess(session.user.email);
-            }
-        }
-
-        // Execute session check immediately when script loads
-        checkExistingSession();
-    </script>
-</body>
-</html>
+</script>
