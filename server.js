@@ -6,16 +6,9 @@ const path = require('path');
 const app = express();
 app.use(express.json());
 
-// Subdomain routing middleware: intercepts traffic hitting the admin subdomain
-app.use((req, res, next) => {
-  const host = req.headers.host || ''; 
-  
-  if (host.startsWith('admin.')) {
-    if (req.url === '/' || req.url === '/admin.html') {
-      return res.sendFile(path.join(__dirname, 'admin.html'));
-    }
-  }
-  next();
+// Redirect legacy /admin.html to main terminal
+app.get('/admin.html', (req, res) => {
+  res.redirect('/#admin');
 });
 
 // Serve static web pages (index.html, about.html, etc.) from your project folder
@@ -29,6 +22,14 @@ mongoose.connect(mongoURI)
   .catch(err => console.error('Connection error:', err));
 
 // Schemas & Models
+const userSchema = new mongoose.Schema({
+  username: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  createdAt: { type: Date, default: Date.now }
+});
+const User = mongoose.model('User', userSchema);
+
 const cyberlabSchema = new mongoose.Schema({
   username: String,
   score: Number,
@@ -44,6 +45,30 @@ const adminLogSchema = new mongoose.Schema({
 const AdminLog = mongoose.model('AdminLog', adminLogSchema);
 
 // Routes
+
+// User Registration Route
+app.post('/api/register', async (req, res) => {
+  try {
+    const { username, email, password } = req.body;
+    if (!username || !email || !password) {
+      return res.status(400).json({ success: false, message: 'Username, Email, and Password are required.' });
+    }
+
+    // Check if user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ success: false, message: 'Account with this email already exists!' });
+    }
+
+    const newUser = new User({ username, email, password });
+    await newUser.save();
+    res.status(201).json({ success: true, message: 'Account created successfully! You can now log in.' });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// Telemetry & Score Saving Route
 app.post('/api/save-score', async (req, res) => {
   try {
     const { username, score } = req.body;
@@ -55,6 +80,7 @@ app.post('/api/save-score', async (req, res) => {
   }
 });
 
+// Admin Sync Route
 app.post('/api/test-sync', async (req, res) => {
   try {
     const { user, action, timestamp } = req.body;

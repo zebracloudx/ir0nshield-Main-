@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IronShield | Main Terminal</title>
-    <meta name="description" content="IronShield Threat Intelligence Matrix and Admin Security Portal Sandbox">
+    <meta name="description" content="IronShield Threat Intelligence Matrix, Cyber Defense Sandbox & User Registration Portal">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
 
@@ -77,7 +77,7 @@
         /* Terminal Tab Navigation */
         .tab-nav {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             margin-bottom: 20px;
             border-bottom: 1px solid rgba(0, 255, 204, 0.3);
             padding-bottom: 10px;
@@ -88,9 +88,9 @@
             background: rgba(11, 15, 25, 0.6);
             border: 1px solid rgba(56, 189, 248, 0.3);
             color: #8be9fd;
-            padding: 10px 5px;
+            padding: 10px 4px;
             font-family: 'Orbitron', sans-serif;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: bold;
             border-radius: 6px;
             cursor: pointer;
@@ -105,11 +105,11 @@
             box-shadow: 0 0 12px rgba(0, 255, 204, 0.3);
         }
 
-        .tab-btn.admin-tab.active {
-            background: rgba(244, 63, 94, 0.15);
-            border-color: #f43f5e;
-            color: #f43f5e;
-            box-shadow: 0 0 12px rgba(244, 63, 94, 0.3);
+        .tab-btn.register-tab.active {
+            background: rgba(74, 222, 128, 0.15);
+            border-color: #4ade80;
+            color: #4ade80;
+            box-shadow: 0 0 12px rgba(74, 222, 128, 0.3);
         }
 
         .tab-content {
@@ -159,17 +159,17 @@
             box-shadow: 0 0 25px #00ffcc, 0 0 50px #00ffcc;
         }
 
-        /* Admin Form Embedded Styles */
-        .admin-form-container {
+        /* Form Styles */
+        .form-container {
             text-align: left;
             background: rgba(11, 15, 25, 0.7);
-            border: 1px solid rgba(244, 63, 94, 0.4);
+            border: 1px solid rgba(56, 189, 248, 0.3);
             border-radius: 8px;
             padding: 20px;
         }
 
         .input-group {
-            margin-bottom: 15px;
+            margin-bottom: 14px;
         }
 
         .input-group label {
@@ -197,8 +197,8 @@
             box-shadow: 0 0 8px rgba(0, 255, 204, 0.4);
         }
 
-        .btn-admin-submit {
-            background-color: #f43f5e;
+        .btn-submit {
+            background-color: #38bdf8;
             color: #0b0f19;
             border: none;
             padding: 12px;
@@ -212,9 +212,29 @@
             transition: all 0.3s;
         }
 
-        .btn-admin-submit:hover {
-            background-color: #ff007f;
-            box-shadow: 0 0 15px rgba(244, 63, 94, 0.6);
+        .btn-submit:hover {
+            background-color: #00ffcc;
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.6);
+        }
+
+        .btn-register-submit {
+            background-color: #4ade80;
+            color: #0b0f19;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            font-size: 0.9rem;
+            cursor: pointer;
+            width: 100%;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+
+        .btn-register-submit:hover {
+            background-color: #00ffcc;
+            box-shadow: 0 0 15px rgba(74, 222, 128, 0.6);
         }
 
         .nav-links-container {
@@ -239,8 +259,8 @@
             text-shadow: 0 0 8px rgba(0, 255, 204, 0.6);
         }
 
-        #response-msg, #admin-msg {
-            margin-top: 15px;
+        .feedback-msg {
+            margin-top: 12px;
             font-size: 0.85rem;
             letter-spacing: 1px;
         }
@@ -253,8 +273,8 @@
                 font-size: 1.5rem;
             }
             .tab-btn {
-                font-size: 0.7rem;
-                padding: 8px 3px;
+                font-size: 0.68rem;
+                padding: 8px 2px;
             }
         }
     </style>
@@ -266,42 +286,64 @@
             <h1>IRONSHIELD</h1>
             <p>Advanced Threat Intelligence Matrix & Cyber Defense Sandbox</p>
             
-            <!-- Tab Control -->
+            <!-- Tab Navigation -->
             <div class="tab-nav">
-                <button class="tab-btn active" onclick="switchTab('pulse')">⚡ Telemetry Grid</button>
-                <button class="tab-btn admin-tab" onclick="switchTab('admin')">🔒 Admin Portal</button>
+                <button class="tab-btn active" onclick="switchTab('pulse')">⚡ Telemetry</button>
+                <button class="tab-btn" onclick="switchTab('login')">🔑 Login</button>
+                <button class="tab-btn register-tab" onclick="switchTab('register')">📝 Register</button>
             </div>
 
-            <!-- Tab 1: Pulse Grid -->
+            <!-- Tab 1: Telemetry Grid -->
             <div id="tab-pulse" class="tab-content active">
                 <div class="pulse-box">
                     <div class="status-text">STATUS: DEFENSE GRID ONLINE</div>
                 </div>
                 <button class="btn-cyber" onclick="pingCore()">Engage Telemetry Pulse</button>
-                <div id="response-msg"></div>
+                <div id="response-msg" class="feedback-msg"></div>
             </div>
 
-            <!-- Tab 2: Embedded Admin Login Portal -->
-            <div id="tab-admin" class="tab-content">
-                <div class="admin-form-container">
-                    <form id="embedded-login-form" onsubmit="handleEmbeddedLogin(event)">
+            <!-- Tab 2: Login Portal -->
+            <div id="tab-login" class="tab-content">
+                <div class="form-container">
+                    <form onsubmit="handleLogin(event)">
                         <div class="input-group">
-                            <label for="admin-email">ADMIN EMAIL</label>
-                            <input type="email" id="admin-email" required placeholder="admin@ironshield.io">
+                            <label for="login-email">USER EMAIL</label>
+                            <input type="email" id="login-email" required placeholder="admin@ironshield.io">
                         </div>
                         <div class="input-group">
-                            <label for="admin-password">PASSWORD</label>
-                            <input type="password" id="admin-password" required placeholder="••••••••">
+                            <label for="login-password">PASSWORD</label>
+                            <input type="password" id="login-password" required placeholder="••••••••">
                         </div>
-                        <button type="submit" class="btn-admin-submit">AUTHENTICATE & LOG IN</button>
-                        <div id="admin-msg"></div>
+                        <button type="submit" class="btn-submit">AUTHENTICATE & LOG IN</button>
+                        <div id="login-msg" class="feedback-msg"></div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Tab 3: Register Portal -->
+            <div id="tab-register" class="tab-content">
+                <div class="form-container">
+                    <form onsubmit="handleRegister(event)">
+                        <div class="input-group">
+                            <label for="reg-username">OPERATOR USERNAME</label>
+                            <input type="text" id="reg-username" required placeholder="Matrix_Agent_01">
+                        </div>
+                        <div class="input-group">
+                            <label for="reg-email">EMAIL ADDRESS</label>
+                            <input type="email" id="reg-email" required placeholder="agent@ironshield.io">
+                        </div>
+                        <div class="input-group">
+                            <label for="reg-password">PASSWORD</label>
+                            <input type="password" id="reg-password" required placeholder="••••••••">
+                        </div>
+                        <button type="submit" class="btn-register-submit">CREATE OPERATOR ACCOUNT</button>
+                        <div id="reg-msg" class="feedback-msg"></div>
                     </form>
                 </div>
             </div>
 
             <div class="nav-links-container">
                 <a href="about.html" class="nav-link">&gt;&gt; Access System Intel (About Us)</a>
-                <a href="admin.html" class="nav-link" style="font-size:0.75rem; color:#cbd5e1;">&gt;&gt; Standalone Admin Page</a>
             </div>
         </div>
     </div>
@@ -314,9 +356,12 @@
             if (tabName === 'pulse') {
                 document.querySelectorAll('.tab-btn')[0].classList.add('active');
                 document.getElementById('tab-pulse').classList.add('active');
-            } else {
+            } else if (tabName === 'login') {
                 document.querySelectorAll('.tab-btn')[1].classList.add('active');
-                document.getElementById('tab-admin').classList.add('active');
+                document.getElementById('tab-login').classList.add('active');
+            } else if (tabName === 'register') {
+                document.querySelectorAll('.tab-btn')[2].classList.add('active');
+                document.getElementById('tab-register').classList.add('active');
             }
         }
 
@@ -347,14 +392,14 @@
             }
         }
 
-        async function handleEmbeddedLogin(event) {
+        async function handleLogin(event) {
             event.preventDefault();
-            const email = document.getElementById('admin-email').value;
-            const password = document.getElementById('admin-password').value;
-            const msgEl = document.getElementById('admin-msg');
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const msgEl = document.getElementById('login-msg');
             
             msgEl.style.color = "#38bdf8";
-            msgEl.textContent = "Authenticating with MongoDB backend...";
+            msgEl.textContent = "Authenticating with MongoDB Atlas...";
 
             try {
                 const response = await fetch('/api/test-sync', {
@@ -378,13 +423,49 @@
 
                 if (response.ok) {
                     msgEl.style.color = "#4ade80";
-                    msgEl.textContent = "MongoDB Sync Successful! Redirecting to Dashboard...";
+                    msgEl.textContent = "Authentication Successful! Redirecting to Dashboard...";
                     setTimeout(() => {
                         window.location.href = 'dashboard.html';
                     }, 600);
                 } else {
                     msgEl.style.color = "#f43f5e";
                     msgEl.textContent = result.message || "Authentication failed.";
+                }
+            } catch (err) {
+                msgEl.style.color = "#f43f5e";
+                msgEl.textContent = "Network error: " + err.message;
+            }
+        }
+
+        async function handleRegister(event) {
+            event.preventDefault();
+            const username = document.getElementById('reg-username').value;
+            const email = document.getElementById('reg-email').value;
+            const password = document.getElementById('reg-password').value;
+            const msgEl = document.getElementById('reg-msg');
+
+            msgEl.style.color = "#38bdf8";
+            msgEl.textContent = "Registering new operator account in MongoDB...";
+
+            try {
+                const response = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, email, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    msgEl.style.color = "#4ade80";
+                    msgEl.textContent = data.message + " Redirecting to Login tab...";
+                    setTimeout(() => {
+                        document.getElementById('login-email').value = email;
+                        switchTab('login');
+                    }, 1200);
+                } else {
+                    msgEl.style.color = "#f43f5e";
+                    msgEl.textContent = data.message || "Registration failed.";
                 }
             } catch (err) {
                 msgEl.style.color = "#f43f5e";
