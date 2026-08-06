@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IronShield Subneteers | About Us</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(rgba(5, 8, 15, 0.75), rgba(5, 8, 15, 0.85)), 
+                        url('IRONSHIELD SUBNETEERS.png'),
+                        url('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #00ffcc;
+            min-height: 100vh;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            border-bottom: 1px solid rgba(0, 255, 204, 0.2);
+            background: rgba(5, 8, 15, 0.8);
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: #00ffcc;
+        }
+
+        .nav-buttons a {
+            background: transparent;
+            color: #00ffcc;
+            border: 1px solid #00ffcc;
+            padding: 8px 20px;
+            margin-left: 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-buttons a:hover {
+            background: #00ffcc;
+            color: #05080f;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(0, 255, 204, 0.6);
+        }
+
+        .subtitle {
+            color: #ff007f;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            margin-bottom: 40px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .ninja-card {
+            background-color: rgba(10, 15, 30, 0.9);
+            border: 1px solid #00ffcc;
+            border-radius: 8px;
+            padding: 30px 20px;
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.15);
+            transition: transform 0.3s;
+        }
+
+        .ninja-card:hover {
+            transform: translateY(-5px);
+            border-color: #ff007f;
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.4);
+        }
+
+        .ninja-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .ninja-name {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #ffffff;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">🛡️ IRONSHIELD SUBNETEERS</div>
+        <div class="nav-buttons">
+            <a href="index.html">Main Terminal</a>
+            <a href="admin.html">Login</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>THE CYBER NINJAS</h1>
+        <div class="subtitle">Squad Roster & Operational Division</div>
+
+        <div class="grid">
+            <div class="ninja-card">
+                <div class="ninja-icon">🥷</div>
+                <div class="ninja-name">Athira</div>
+            </div>
+            <div class="ninja-card">
+                <div class="ninja-icon">🥷</div>
+                <div class="ninja-name">Thanseeh</div>
+            </div>
+            <div class="ninja-card">
+                <div class="ninja-icon">🥷</div>
+                <div class="ninja-name">Sagar Aka George</div>
+            </div>
+            <div class="ninja-card">
+                <div class="ninja-icon">🥷</div>
+                <div class="ninja-name">Sreerekh Vidyadharan</div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

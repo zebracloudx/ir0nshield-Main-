@@ -3,115 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IronShield | Dashboard</title>
+    <title>IronShield Subneteers | Welcome Home</title>
     <style>
-        :root {
-            --accent-cyan: #38bdf8;
-            --accent-pink: #f43f5e;
-            --accent-green: #4ade80;
-            --text-main: #ffffff;
-            --text-muted: #cbd5e1;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            color: var(--text-main);
-            background: linear-gradient(rgba(11, 15, 25, 0.8), rgba(11, 15, 25, 0.9)), 
-                        url('Gemini_Generated_Image_i7d7n6i7d7n6i7d7.png');
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(rgba(5, 8, 15, 0.85), rgba(5, 8, 15, 0.95)), 
+                        url('IRONSHIELD SUBNETEERS.png');
             background-size: cover;
             background-position: center;
+            background-attachment: fixed;
+            color: #00ffcc;
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-        }
-        .dashboard-card {
-            background-color: rgba(17, 24, 39, 0.9);
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            border-radius: 12px;
-            padding: 2rem;
-            width: 100%;
-            max-width: 450px;
             text-align: center;
-            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.6);
         }
-        h2 {
-            font-family: 'Courier New', Courier, monospace;
-            color: var(--accent-cyan);
-            margin-top: 0;
+
+        .dashboard-card {
+            background-color: rgba(10, 15, 30, 0.92);
+            border: 2px solid #00ffcc;
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 550px;
+            width: 90%;
+            box-shadow: 0 0 35px rgba(0, 255, 204, 0.3);
         }
-        .bunny-container img {
-            width: 140px;
-            height: auto;
+
+        h1 {
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            color: #00ffcc;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(0, 255, 204, 0.6);
+        }
+
+        .hero-img {
+            width: 100%;
+            max-height: 280px;
+            object-fit: contain;
+            background-color: rgba(5, 8, 15, 0.5);
             border-radius: 8px;
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
-            margin: 1rem 0;
+            border: 1px solid #ff007f;
+            margin-bottom: 15px;
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.4);
         }
-        .telemetry-box {
-            background: rgba(11, 15, 25, 0.8);
-            border: 1px solid var(--accent-green);
-            border-radius: 8px;
-            padding: 1rem;
-            text-align: left;
-            font-family: monospace;
-            font-size: 0.85rem;
-            margin: 1.5rem 0;
-        }
-        .telemetry-box h4 {
-            color: var(--accent-green);
-            margin: 0 0 0.5rem 0;
-        }
-        .telemetry-box ul {
-            margin: 0;
-            padding-left: 1.2rem;
-            color: var(--text-muted);
-            line-height: 1.5;
-        }
-        .btn-logout {
-            background-color: var(--accent-pink);
-            color: #0b0f19;
-            border: none;
-            padding: 0.75rem 1.5rem;
+
+        .audio-notice {
+            background: rgba(255, 0, 127, 0.15);
+            border: 1px dashed #ff007f;
+            color: #ff007f;
+            padding: 10px;
             border-radius: 6px;
+            font-size: 0.75rem;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            text-shadow: 0 0 5px rgba(255, 0, 127, 0.4);
+        }
+
+        .telemetry-box {
+            background: rgba(5, 8, 15, 0.8);
+            border: 1px solid #00ffcc;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: left;
+            margin-bottom: 20px;
+            font-size: 0.8rem;
+            color: #8be9fd;
+        }
+
+        .telemetry-box h3 {
+            color: #ff007f;
+            margin-top: 0;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            border-bottom: 1px solid rgba(255, 0, 127, 0.3);
+            padding-bottom: 5px;
+        }
+
+        .telemetry-box ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            line-height: 1.8;
+        }
+
+        .btn-logout {
+            background-color: #ff007f;
+            color: #fff;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 6px;
+            font-family: 'Orbitron', sans-serif;
             font-weight: bold;
             cursor: pointer;
-            width: 100%;
+            letter-spacing: 2px;
             text-decoration: none;
+            display: inline-block;
+            transition: 0.3s;
+        }
+
+        .btn-logout:hover {
+            background: #00ffcc;
+            color: #05080f;
         }
     </style>
 </head>
 <body>
 
-    <!-- Background Audio / Music Element -->
-    <audio autoplay loop>
-        <source src="sherlock_holmes.mp3" type="audio/mpeg">
-    </audio>
+    <!-- Audio Element -->
+    <audio id="login-audio" src="sherlock_holmes.mp3" preload="auto" loop></audio>
 
     <div class="dashboard-card">
-        <h2>WELCOME HOME! SHERLOCKS 🕵️‍♂️</h2>
+        <h1>WELCOME HOME SHERLOCKS 🕵️‍♂️</h1>
         
-        <div class="bunny-container">
-            <img src="Gemini_Generated_Image_i7d7n6i7d7n6i7d7.png" alt="Sherlock Bunny">
-        </div>
-        
-        <p style="color: var(--text-muted);">Congratulations!!</p>
+        <!-- SBB.jpeg Image -->
+        <img src="SBB.jpeg" alt="Sherlock Holmes Terminal" class="hero-img">
 
+        <!-- Cyber Audio Prompt Notice -->
+        <div class="audio-notice" id="audio-notice">
+            ⚡ [SYSTEM NOTICE]: CLICK ANYWHERE TO DECRYPT AUDIO STREAM
+        </div>
+
+        <!-- Session Telemetry -->
         <div class="telemetry-box">
-            <h4>📋 Session Telemetry</h4>
+            <h3>📋 Session Telemetry</h3>
             <ul>
-                <li><strong>Active User:</strong> admin@ironshield.io</li>
-                <li><strong>Last Login:</strong> <span id="login-time">Just now</span></li>
-                <li><strong>Database Sync:</strong> MongoDB Atlas Secure ✅</li>
+                <li>• <strong>Active Operator:</strong> Subneteer Secure</li>
+                <li>• <strong>System Time:</strong> <span id="login-time"></span></li>
+                <li>• <strong>Database Sync:</strong> MongoDB Atlas Secure [ONLINE] ✅</li>
             </ul>
         </div>
 
-        <button onclick="window.location.href='admin.html'" class="btn-logout">🔒 Secure Logout</button>
+        <a href="admin.html" class="btn-logout">🔒 Secure Logout</a>
     </div>
 
     <script>
         document.getElementById('login-time').textContent = new Date().toLocaleTimeString();
+
+        // Automatically unlock audio and hide notice on the user's first click anywhere
+        document.body.addEventListener('click', function unlockAudio() {
+            const audio = document.getElementById('login-audio');
+            const notice = document.getElementById('audio-notice');
+            
+            audio.play().then(() => {
+                if (notice) {
+                    notice.style.display = 'none'; // Hide the notice once music starts playing
+                }
+            }).catch(err => {
+                console.log("Audio waiting for interaction");
+            });
+        }, { once: true });
     </script>
 </body>
 </html>
