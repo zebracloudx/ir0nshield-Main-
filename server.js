@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
@@ -19,7 +20,7 @@ app.use((req, res, next) => {
 // Serve static web pages
 app.use(express.static(__dirname));
 
-const mongoURI = 'mongodb+srv://zebracloudx_db_user:Vhn3Ki8swcqEVHN2@cluster0.uonzfzg.mongodb.net/test?appName=Cluster0';
+const mongoURI = process.env.MONGO_URI;
 
 // Schemas & Models
 const cyberlabSchema = new mongoose.Schema({
