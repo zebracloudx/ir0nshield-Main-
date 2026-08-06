@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IronShield | Dashboard</title>
+    <style>
+        :root {
+            --accent-cyan: #38bdf8;
+            --accent-pink: #f43f5e;
+            --accent-green: #4ade80;
+            --text-main: #ffffff;
+            --text-muted: #cbd5e1;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text-main);
+            background: linear-gradient(rgba(11, 15, 25, 0.8), rgba(11, 15, 25, 0.9)), 
+                        url('Gemini_Generated_Image_i7d7n6i7d7n6i7d7.png');
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .dashboard-card {
+            background-color: rgba(17, 24, 39, 0.9);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.6);
+        }
+        h2 {
+            font-family: 'Courier New', Courier, monospace;
+            color: var(--accent-cyan);
+            margin-top: 0;
+        }
+        .bunny-container img {
+            width: 140px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+            margin: 1rem 0;
+        }
+        .telemetry-box {
+            background: rgba(11, 15, 25, 0.8);
+            border: 1px solid var(--accent-green);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: left;
+            font-family: monospace;
+            font-size: 0.85rem;
+            margin: 1.5rem 0;
+        }
+        .telemetry-box h4 {
+            color: var(--accent-green);
+            margin: 0 0 0.5rem 0;
+        }
+        .telemetry-box ul {
+            margin: 0;
+            padding-left: 1.2rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+        .btn-logout {
+            background-color: var(--accent-pink);
+            color: #0b0f19;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Audio / Music Element -->
+    <audio autoplay loop>
+        <source src="sherlock_holmes.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="dashboard-card">
+        <h2>WELCOME HOME! SHERLOCKS 🕵️‍♂️</h2>
+        
+        <div class="bunny-container">
+            <img src="Gemini_Generated_Image_i7d7n6i7d7n6i7d7.png" alt="Sherlock Bunny">
+        </div>
+        
+        <p style="color: var(--text-muted);">Congratulations!!</p>
+
+        <div class="telemetry-box">
+            <h4>📋 Session Telemetry</h4>
+            <ul>
+                <li><strong>Active User:</strong> admin@ironshield.io</li>
+                <li><strong>Last Login:</strong> <span id="login-time">Just now</span></li>
+                <li><strong>Database Sync:</strong> MongoDB Atlas Secure ✅</li>
+            </ul>
+        </div>
+
+        <button onclick="window.location.href='admin.html'" class="btn-logout">🔒 Secure Logout</button>
+    </div>
+
+    <script>
+        document.getElementById('login-time').textContent = new Date().toLocaleTimeString();
+    </script>
+</body>
+</html>
