@@ -19,9 +19,72 @@
             color: #00ffcc;
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Top Navigation Bar */
+        .site-nav {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            box-sizing: border-box;
+            background-color: rgba(10, 15, 30, 0.95);
+            border-bottom: 2px solid #00ffcc;
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #00ffcc;
+            font-weight: bold;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            text-shadow: 0 0 5px rgba(0, 255, 204, 0.4);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn-vid-tuts {
+            background: transparent;
+            border: 2px solid #ff007f;
+            color: #ff007f;
+            padding: 8px 18px;
+            border-radius: 6px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-decoration: none;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            box-shadow: 0 0 10px rgba(255, 0, 127, 0.2);
+        }
+
+        .btn-vid-tuts:hover {
+            background: #ff007f;
+            color: #fff;
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.6);
+        }
+
+        /* Main Container Wrapper */
+        .main-wrapper {
+            flex: 1;
+            display: flex;
             justify-content: center;
             align-items: center;
-            text-align: center;
+            width: 100%;
+            padding: 30px 0;
         }
 
         .dashboard-card {
@@ -32,6 +95,7 @@
             max-width: 550px;
             width: 90%;
             box-shadow: 0 0 35px rgba(0, 255, 204, 0.3);
+            text-align: center;
         }
 
         h1 {
@@ -118,28 +182,41 @@
     <!-- Audio Element -->
     <audio id="login-audio" src="sherlock_holmes.mp3" preload="auto" loop></audio>
 
-    <div class="dashboard-card">
-        <h1>WELCOME HOME SHERLOCKS 🕵️‍♂️</h1>
-        
-        <!-- SBB.jpeg Image -->
-        <img src="SBB.jpeg" alt="Sherlock Holmes Terminal" class="hero-img">
-
-        <!-- Cyber Audio Prompt Notice -->
-        <div class="audio-notice" id="audio-notice">
-            ⚡ [SYSTEM NOTICE]: CLICK ANYWHERE TO DECRYPT AUDIO STREAM
+    <!-- Top Navigation Bar with VID TUTS Button on Top Right -->
+    <nav class="site-nav">
+        <div class="nav-brand">
+            <span>🛡️</span> IRONSHIELD SUBNETEERS
         </div>
-
-        <!-- Session Telemetry -->
-        <div class="telemetry-box">
-            <h3>📋 Session Telemetry</h3>
-            <ul>
-                <li>• <strong>Active Operator:</strong> Subneteer Secure</li>
-                <li>• <strong>System Time:</strong> <span id="login-time"></span></li>
-                <li>• <strong>Database Sync:</strong> MongoDB Atlas Secure [ONLINE] ✅</li>
-            </ul>
+        <div class="nav-actions">
+            <a href="video-tuts.html" class="btn-vid-tuts">VID TUTS</a>
         </div>
+    </nav>
 
-        <a href="admin.html" class="btn-logout">🔒 Secure Logout</a>
+    <!-- Main Content Area -->
+    <div class="main-wrapper">
+        <div class="dashboard-card">
+            <h1>WELCOME HOME SHERLOCKS 🕵️‍♂️</h1>
+            
+            <!-- SBB.jpeg Image -->
+            <img src="SBB.jpeg" alt="Sherlock Holmes Terminal" class="hero-img">
+
+            <!-- Cyber Audio Prompt Notice -->
+            <div class="audio-notice" id="audio-notice">
+                ⚡ [SYSTEM NOTICE]: CLICK ANYWHERE TO DECRYPT AUDIO STREAM
+            </div>
+
+            <!-- Session Telemetry -->
+            <div class="telemetry-box">
+                <h3>📋 Session Telemetry</h3>
+                <ul>
+                    <li>• <strong>Active Operator:</strong> Subneteer Secure</li>
+                    <li>• <strong>System Time:</strong> <span id="login-time"></span></li>
+                    <li>• <strong>Database Sync:</strong> MongoDB Atlas Secure [ONLINE] ✅</li>
+                </ul>
+            </div>
+
+            <a href="admin.html" class="btn-logout">🔒 Secure Logout</a>
+        </div>
     </div>
 
     <script>
