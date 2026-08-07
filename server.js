@@ -17,8 +17,14 @@ app.use((req, res, next) => {
   next();
 });
 
-// Serve static web pages
-app.use(express.static(__dirname));
+// Serve static web pages with explicit MIME-type support for MP4 video streaming
+app.use(express.static(__dirname, {
+  setHeaders: (res, filePath) => {
+    if (filePath.endsWith('.mp4')) {
+      res.setHeader('Content-Type', 'video/mp4');
+    }
+  }
+}));
 
 const mongoURI = process.env.MONGO_URI;
 
@@ -106,7 +112,7 @@ mongoose.connect(mongoURI)
   .then(() => {
     console.log('Successfully connected to MongoDB Atlas!');
     app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
+      console.log(`Server is running securely on port ${PORT}`);
     });
   })
   .catch(err => {

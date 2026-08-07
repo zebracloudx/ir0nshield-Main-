@@ -38,7 +38,13 @@
             text-shadow: 0 0 10px rgba(0, 255, 204, 0.6);
         }
 
-        /* Top right CTF / Modules button */
+        /* Top right navigation buttons group */
+        .nav-buttons {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
         .nav-buttons a {
             background: transparent;
             color: #ffe600;
@@ -56,6 +62,19 @@
             background: #ffe600;
             color: #05080f;
             box-shadow: 0 0 15px #ffe600;
+        }
+
+        /* Specific style for Video Tutorials button on top right */
+        .btn-vid-tuts {
+            color: #ff007f !important;
+            border-color: #ff007f !important;
+            box-shadow: 0 0 10px rgba(255, 0, 127, 0.2) !important;
+        }
+
+        .btn-vid-tuts:hover {
+            background: #ff007f !important;
+            color: #fff !important;
+            box-shadow: 0 0 15px #ff007f !important;
         }
 
         .container {
@@ -149,6 +168,7 @@
     <header>
         <div class="logo">🛡️ IRONSHIELD SUBNETEERS</div>
         <div class="nav-buttons">
+            <a href="video-tuts.html" class="btn-vid-tuts">VIDEO TUTORIALS</a>
             <a href="ctf.html">🎯 CTF / Modules</a>
         </div>
     </header>
