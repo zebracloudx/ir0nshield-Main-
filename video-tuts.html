@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IronShield Subneteers | Video Tutorials</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(rgba(5, 8, 15, 0.85), rgba(5, 8, 15, 0.95)), 
+                        url('IRONSHIELD SUBNETEERS.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #00ffcc;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .site-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            width: 100%;
+            box-sizing: border-box;
+            background-color: rgba(10, 15, 30, 0.95);
+            border-bottom: 2px solid #00ffcc;
+        }
+
+        .main-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 90%;
+            max-width: 700px;
+            padding: 30px 0;
+        }
+
+        h1 {
+            font-size: 1.3rem;
+            color: #00ffcc;
+            margin-bottom: 20px;
+            text-align: center;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+        }
+
+        .video-wrapper {
+            background-color: rgba(10, 15, 30, 0.92);
+            border: 2px solid #00ffcc;
+            border-radius: 12px;
+            padding: 15px;
+            width: 100%;
+            max-width: 340px;
+            box-shadow: 0 0 35px rgba(0, 255, 204, 0.3);
+            box-sizing: border-box;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 177.77%; /* Vertical 9:16 aspect ratio for Shorts */
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            border: 1px solid #ff007f;
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.3);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="site-nav">
+        <div style="color: #00ffcc; font-weight: bold; letter-spacing: 1px;">🛡️ IRONSHIELD SUBNETEERS</div>
+        <div>
+            <a href="index.html" style="color: #00ffcc; border: 2px solid #00ffcc; padding: 8px 18px; border-radius: 6px; text-decoration: none; font-size: 0.8rem;">🏠 HOME</a>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <h1>WAF INSTALLATION TUTORIAL</h1>
+        <div class="video-wrapper">
+            <div class="video-container">
+                <!-- Standard YouTube Player Embed URL format bypassing restriction flags -->
+                <iframe src="https://www.youtube-nocookie.com/embed/R8mkEhtVrLE?autoplay=0&rel=0&modestbranding=1" 
+                        title="WAF installation on a Mern Stack" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
